@@ -4,7 +4,7 @@
 
 * Fabien
 * Liviu
-* jffy
+* jffy (Project Manager)
 
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/chingu-voyage5/Bears-Team-32.svg?columns=all)](https://waffle.io/chingu-voyage5/Bears-Team-32)
 
