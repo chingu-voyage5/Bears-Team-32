@@ -1,3 +1,8 @@
 import React from "react";
-import styled, { css } from "styled-components";
-import {} from "./style-utils";
+import { WrapperSideBar } from "./style-utils";
+
+const SideBar = () => {
+   return <WrapperSideBar>sidebar</WrapperSideBar>;
+};
+
+export default SideBar;
