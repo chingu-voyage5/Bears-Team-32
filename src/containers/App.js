@@ -4,7 +4,8 @@ import Card from "../components/Card";
 import {
    WrapperApp,
    WrapperMain,
-   WrapperSection
+   WrapperSection,
+   HeadingPrimary
 } from "../components/style-utils";
 import Menu from "../components/Menu";
 import SideBar from "../components/SideBar";
@@ -20,8 +21,9 @@ class App extends Component {
                <SideBar>Sidebar</SideBar>
                <WrapperMain>
                   <WrapperSection>
+                     <HeadingPrimary>Recently Played</HeadingPrimary>
                      <Card />
-                     <Card />
+                     <Card circle />
                      <Card />
                      <Card />
                      <Card />

@@ -4,8 +4,7 @@ import faker from "faker";
 
 const Figure = styled.figure`
    display: inline-block;
-   /* border-radius: props => props.radius || "0"" : "0")}; */
-
+   border-radius: ${props => (props.circle ? "50%" : "none")};
    width: 20rem;
    height: 20rem;
    box-shadow: var(--shadow-section);
@@ -14,25 +13,24 @@ const Figure = styled.figure`
 
 const Figcaption = styled.figcaption`
    color: var(--color-white);
-   /* color: ${props => (props.circle === "yes" ? "blue" : "yellow")}; */
+   color: ${props => (props.circle ? "blue" : "yellow")};
    text-align: center;
 `;
 
 const Img = styled.img`
    width: 100%;
    height: 100%;
-   /* width: 19rem;
-   height: 19rem; */
-   /* src: url(${props => props.src}); */
 `;
 
 const abstractImage = faker.image.abstract(300, 300);
 
-const Card = () => {
+const Card = props => {
+   console.log(props);
+
    return (
-      <Figure>
+      <Figure circle={props.circle}>
          <Img src={abstractImage} alt="Random Image" />
-         <Figcaption>Random Image</Figcaption>
+         <Figcaption circle={props.circle}>Random Image</Figcaption>
       </Figure>
    );
 };

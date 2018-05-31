@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-// import Card from "./Card";
 
 export const respond = {
    handheld: (...args) => css`
@@ -36,7 +35,6 @@ export const WrapperFooter = styled.footer`
 export const WrapperSection = styled.section`
    display: grid;
    grid-gap: 2rem 2rem;
-   /* justify-content: center; */
    justify-items: center;
    width: 80%;
    margin: 4rem auto;
@@ -48,10 +46,7 @@ export const WrapperSection = styled.section`
 export const WrapperMain = styled.main`
    display: grid;
    grid-column: 2/3;
-   /* grid-row:  */
    width: 100%;
-   /* margin: 4rem auto; */
-   /* grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); */
    background: rgba(11, 222, 222, 0.1);
 `;
 
@@ -61,4 +56,14 @@ export const WrapperApp = styled.div`
    grid-template-rows: 5rem repeat(auto-fill, minmax(20rem, 1fr)) 9rem;
    justify-content: center;
    background-color: rgba(122, 11, 255, 0.1);
+`;
+
+export const HeadingPrimary = styled.h1`
+   grid-column: 1/-1;
+   color: var(--color-white);
+   font-size: 5.5rem;
+   font-weight: 900;
+   justify-self: center;
+   text-align: center;
+   line-height: 1.4;
 `;
