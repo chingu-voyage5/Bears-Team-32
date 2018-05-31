@@ -1,5 +1,31 @@
-#player {
-    height: 20px;
+.playerBar-container {
+    height: 90px;
     width: 100%;
-    background-color: black;
+    /* Position the player to the bottom of the page */
+    /* position: fixed;
+    bottom: 0; */
+    background-color: #282828;
+}
+
+.playerBar {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    user-select: none; /* prevent selection */
+}
+
+.player__left {
+    height: 100%;
+    width: 100%;
+    background-color: blue;
+}
+.player__center {
+    height: 100%;
+    width: 100%;
+    background-color: pink;
+}
+.player__right {
+    height: 100%;
+    width: 100%;
+    background-color: green;
 }
