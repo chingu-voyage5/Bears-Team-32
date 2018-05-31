@@ -22,13 +22,23 @@
     min-width: 180px;
     background-color: blue;
 }
+
 .player__center {
     width: 40%;
     max-width: 722px;
     background-color: pink;
 }
+
 .player__right {
     width: 30%;
     min-width: 180px;
     background-color: green;
+}
+
+.now-playing { 
+    display: flex;
+}
+
+.control-button:hover {
+    color: #fff;
 }
