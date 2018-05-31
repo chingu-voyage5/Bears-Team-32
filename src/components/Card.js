@@ -4,13 +4,17 @@ import faker from "faker";
 
 const Figure = styled.figure`
    display: inline-block;
+   /* border-radius: props => props.radius || "0"" : "0")}; */
+
    width: 20rem;
    height: 20rem;
-   margin: 2rem;
+   box-shadow: var(--shadow-section);
+   margin-bottom: 2rem;
 `;
 
 const Figcaption = styled.figcaption`
    color: var(--color-white);
+   /* color: ${props => (props.circle === "yes" ? "blue" : "yellow")}; */
    text-align: center;
 `;
 
@@ -23,7 +27,6 @@ const Img = styled.img`
 `;
 
 const abstractImage = faker.image.abstract(300, 300);
-// console.log(abstractImage);
 
 const Card = () => {
    return (

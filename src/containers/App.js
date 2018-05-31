@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import Card from "../components/Card";
 // import styled from "styled-components";
-import { WrapperApp, WrapperSection } from "../components/style-utils";
+import {
+   WrapperApp,
+   WrapperMain,
+   WrapperSection
+} from "../components/style-utils";
 import Menu from "../components/Menu";
 import SideBar from "../components/SideBar";
 import Footer from "../components/Footer";
@@ -14,20 +18,36 @@ class App extends Component {
             <WrapperApp>
                <Menu>Menu</Menu>
                <SideBar>Sidebar</SideBar>
-               <WrapperSection>
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-               </WrapperSection>
+               <WrapperMain>
+                  <WrapperSection>
+                     <Card />
+                     <Card />
+                     <Card />
+                     <Card />
+                     <Card />
+                     <Card />
+                     <Card />
+                     <Card />
+                     <Card />
+                     <Card />
+                     <Card />
+                     <Card />
+                  </WrapperSection>
+                  <WrapperSection>
+                     <Card />
+                     <Card />
+                     <Card />
+                     <Card />
+                     <Card />
+                     <Card />
+                     <Card />
+                     <Card />
+                     <Card />
+                     <Card />
+                     <Card />
+                     <Card />
+                  </WrapperSection>
+               </WrapperMain>
                <Footer>Footer</Footer>
             </WrapperApp>
          </div>
