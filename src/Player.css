@@ -1,3 +1,35 @@
+div.App {
+    text-align: left;
+}
+
+a, a:focus, a:hover {
+    text-decoration: none;
+}
+
+a {
+    color: #fff;
+    border-bottom: 1px solid transparent;
+}
+
+a:focus, a:hover {
+    border-bottom-color: currentcolor;
+}
+
+.link-subtle {
+    color: hsla(0,0%,100%,.6);
+}
+
+.link-subtle:hover, 
+.link-subtle:focus {
+    color: #fff;
+}
+
+.elipsis-one-line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; /* prevent the text to go to next line */
+}
+
 .playerBar-container {
     width: 100%;
     /* Position the player to the bottom of the page */
@@ -15,28 +47,90 @@
     flex-direction: row;
     width: auto;
     user-select: none; /* prevent selection */
+    padding: 0 16px;
 }
 
 .player__left {
     width: 30%;
     min-width: 180px;
-    background-color: blue;
+    background-color: blue; /* debug */
+}
+
+.now-playing {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: start;
+}
+
+.now-playing .cover-art {
+    width: 56px;
+    height: 56px;
+    padding-right: 14px;
+}
+
+.cover-art {
+    height: 10px;
+    width: 10px;
+}
+
+.cover-art .shadow {
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.covert-art-image {
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-position: 50%;
+    background-image: url("https://i.scdn.co/image/036bbf9495d4a5a8a6683b91d02945d6b47dc536");
+}
+
+.track-info {
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.track-info__name {
+    font-size: 14px;
+    line-height: 20px;
+    color: #fff;
+}
+
+.track-info__artists {
+    font-size: 11px;
+    line-height: 16px;
+}
+
+.track-info__artists a:link,
+.track-info__artists a:visited {
+    color:#b3b3b3;
+}
+
+.track-info__artists a:active,
+.track-info__artists a:hover {
+    color:#fff;
 }
 
 .player__center {
     width: 40%;
     max-width: 722px;
-    background-color: pink;
+    background-color: pink; /* debug */
 }
 
 .player__right {
     width: 30%;
     min-width: 180px;
-    background-color: green;
+    background-color: green; /* debug */
 }
 
 .now-playing { 
     display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .control-button:hover {
