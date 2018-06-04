@@ -38,6 +38,7 @@ const StyledLabel = styled.label`
 `;
 
 const StyledInput = styled.input`
+  box-sizing: border-box;
   position: relative;
   font-size: 3rem;
   font-weight: 700;

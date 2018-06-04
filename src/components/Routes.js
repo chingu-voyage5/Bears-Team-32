@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Layout from './Layout';
-import Home from './Home';
+import Home from '../containers/Home';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import SearchBar from './SearchBar';
 class Routes extends Component {
@@ -8,23 +8,9 @@ class Routes extends Component {
     return (
       <Switch>
         <Route exact path="/" render={() => <Redirect to="/browse/featured" />} />
-        <Route
-          path="/search/recent"
-          render={() => (
-            <Layout name={'search'}>
-              <SearchBar />
-            </Layout>
-          )}
-        />
+        <Route path="/search/recent" render={() => <SearchBar />} />
         <Route path="/browse" component={Home} />
-        <Route
-          path="/collection/playlist"
-          render={() => (
-            <Layout name={'Your Library'}>
-              <h1>Library</h1>
-            </Layout>
-          )}
-        />
+        <Route path="/collection/playlist" render={() => <h1>Library</h1>} />
         <Route render={() => <Layout name={'No Match'} />} />
       </Switch>
     );

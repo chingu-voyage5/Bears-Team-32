@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import SideBarItem from './SideBarItem';
+import SideBarItem from '../components/SideBarItem';
 import { withRouter } from 'react-router';
 
 const Links = [

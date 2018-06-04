@@ -1,60 +1,44 @@
-import React, { Component } from "react";
-import Card from "../components/Card";
-// import styled from "styled-components";
-import {
-   WrapperApp,
-   WrapperMain,
-   WrapperSection,
-   HeadingPrimary
-} from "../components/style-utils";
-import Menu from "../components/Menu";
-import SideBar from "../components/SideBar";
-import Footer from "../components/Footer";
-import "./App.css";
+import React, { Component } from 'react';
+import Routes from '../components/Routes';
+import Player from '../components/Player';
+import SideBar from './SideBar';
+import { BrowserRouter } from 'react-router-dom';
+import styled from 'styled-components';
+import './App.css';
 
 class App extends Component {
-   render() {
-      return (
-         <div className="App">
-            <WrapperApp>
-               <Menu>Menu</Menu>
-               <SideBar>Sidebar</SideBar>
-               <WrapperMain>
-                  <WrapperSection>
-                     <HeadingPrimary>Recently Played</HeadingPrimary>
-                     <Card />
-                     <Card circle />
-                     <Card />
-                     <Card />
-                     <Card />
-                     <Card />
-                     <Card />
-                     <Card />
-                     <Card />
-                     <Card />
-                     <Card />
-                     <Card />
-                  </WrapperSection>
-                  <WrapperSection>
-                     <Card />
-                     <Card />
-                     <Card />
-                     <Card />
-                     <Card />
-                     <Card />
-                     <Card />
-                     <Card />
-                     <Card />
-                     <Card />
-                     <Card />
-                     <Card />
-                  </WrapperSection>
-               </WrapperMain>
-               <Footer>Footer</Footer>
-            </WrapperApp>
-         </div>
-      );
-   }
+  render() {
+    return (
+      <BrowserRouter>
+        <StyledApp>
+          <Wrapper>
+            <SideBar />
+            <Main>
+              <Routes />
+            </Main>
+          </Wrapper>
+          <Player />
+        </StyledApp>
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;
+
+const StyledApp = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  height: 100vh;
+`;
+
+const Main = styled.div`
+  flex-grow: 1;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-grow: 1;
+  height: 80%;
+`;

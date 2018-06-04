@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
-import Layout from './Layout';
+import Layout from '../components/Layout';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
 
@@ -85,15 +85,17 @@ const Wrapper = styled.div`
   height: 100%;
   padding-top: 2rem;
   transition: background-color 500ms;
-  &:before {
+  overflow: auto;
+  /* &::before {
     content: '';
+    display: block;
     position: absolute;
     width: 100%;
     height: 100%;
-    top: 0;
+    bottom: 0;
     left: 0;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
-  }
+  } */
 `;
 
 const StyledLink = styled(Link)`
