@@ -1,14 +1,35 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+
+const SearchTypes = ['album', 'artist', 'playlist', 'track'];
+const LocalApiServer = 'http://localhost:3001';
+const RemoteApiServer = 'https://jffy-api.herokuapp.com';
+
 class SearchBar extends Component {
   timeoutID = null;
+  searchData = [];
 
   handleKeyUp = e => {
     clearTimeout(this.timeoutID);
     const input = e.target;
-
     this.timeoutID = setTimeout(() => {
-      console.log(input.value);
+      let promises = SearchTypes.map(type => {
+        return axios.get(
+          `${RemoteApiServer}/api/v1/spotify/search/?query=${input.value}&type=${type}`,
+        );
+      });
+
+      Promise.all(promises)
+        .then(responses => {
+          responses.forEach((response, index) => {
+            this.searchData[index] = response.data;
+          });
+          console.log(this.searchData);
+        })
+        .catch(error => {
+          console.log(`Errors : ${error}`);
+        });
     }, 500);
   };
 
@@ -49,5 +70,6 @@ const StyledInput = styled.input`
   background-color: #282828;
   outline: none;
   padding-left: 2rem;
+  margin-top: 0.25rem;
   caret-color: lightgreen;
 `;
