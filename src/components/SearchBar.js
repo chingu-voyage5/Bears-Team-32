@@ -8,11 +8,11 @@ const RemoteApiServer = 'https://jffy-api.herokuapp.com';
 
 class SearchBar extends Component {
   timeoutID = null;
-  searchData = [];
 
   handleKeyUp = e => {
     clearTimeout(this.timeoutID);
     const input = e.target;
+    let searchData = {};
     this.timeoutID = setTimeout(() => {
       let promises = SearchTypes.map(type => {
         return axios.get(
@@ -23,9 +23,9 @@ class SearchBar extends Component {
       Promise.all(promises)
         .then(responses => {
           responses.forEach((response, index) => {
-            this.searchData[index] = response.data;
+            searchData = Object.assign(searchData, response.data);
           });
-          console.log(this.searchData);
+          this.props.searchHandler(searchData);
         })
         .catch(error => {
           console.log(`Errors : ${error}`);
