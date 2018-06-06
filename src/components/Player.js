@@ -9,8 +9,21 @@ class Player extends Component {
         <div className="playerBar">
           <div className="player__left">
             <div className="now-playing">
+              <div className="cover-art shadow now-playing__cover-art">
+                <div className="covert-art-image"></div>
+              </div>
+              <div className="track-info elipsis-one-line">
+                <div className="track-info__name elipsis-one-line">
+                  <a href="">Sore Wo Tsuyosa To Yobitai - 2017ver.</a>
+                </div>
+                <div className="track-info__artists link-subtle elipsis-one-line">
+                  <a href="">
+                    Perfume
+                  </a>
+                </div>
+              </div>
               <button className="control-button">
-                <FontAwesome className="control-button" name="plus" />
+                <FontAwesome name="plus" />
               </button>
             </div>
           </div>
