@@ -9,7 +9,7 @@ class Player extends Component {
         <div className="playerBar">
           <div className="player__left">
             <div className="now-playing">
-              <div className="cover-art shadow">
+              <div className="cover-art shadow now-playing__cover-art">
                 <div className="covert-art-image"></div>
               </div>
               <div className="track-info elipsis-one-line">
@@ -23,7 +23,7 @@ class Player extends Component {
                 </div>
               </div>
               <button className="control-button">
-                <FontAwesome className="control-button" name="plus" />
+                <FontAwesome name="plus" />
               </button>
             </div>
           </div>

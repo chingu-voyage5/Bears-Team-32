@@ -1,6 +1,4 @@
-div.App {
-    text-align: left;
-}
+
 
 a, a:focus, a:hover {
     text-decoration: none;
@@ -33,8 +31,8 @@ a:focus, a:hover {
 .playerBar-container {
     width: 100%;
     /* Position the player to the bottom of the page */
-    /* position: fixed;
-    bottom: 0; */
+    position: fixed;
+    bottom: 0;
     background-color: #282828;
     display: flex;
     flex-direction: column;
@@ -53,32 +51,32 @@ a:focus, a:hover {
 .player__left {
     width: 30%;
     min-width: 180px;
-    background-color: blue; /* debug */
+    text-align: left;
 }
 
 .now-playing {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: start;
+    align-items: center;
 }
 
-.now-playing .cover-art {
+.now-playing__cover-art {
+    flex-shrink: 0;
     width: 56px;
     height: 56px;
     padding-right: 14px;
 }
 
 .cover-art {
-    height: 10px;
-    width: 10px;
+    position: relative;
 }
 
-.cover-art .shadow {
+.cover-art.shadow {
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
-.covert-art-image {
+.cover-art .covert-art-image {
     height: 100%;
     width: 100%;
     background-size: cover;
@@ -131,6 +129,16 @@ a:focus, a:hover {
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+.control-button {
+    background-color: transparent;
+    color: hsla(0,0%,100%,.6);
+    border: none;
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    position: relative;
 }
 
 .control-button:hover {
