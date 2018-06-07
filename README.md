@@ -2,9 +2,9 @@
 
 ## Team Member
 
-* Fabien
-* Liviu
-* jffy (Project Manager)
+- Fabien
+- Liviu
+- jffy (Project Manager)
 
 ## Folder Structure
 
@@ -13,6 +13,21 @@ src
  |-- components (for stateless components)
  |-- containers (for stateful components)
 ```
+
+## API Usage
+
+### Base URL : https://jffy-api.herokuapp.com
+
+| End point                                           | Purpose                   | Remark                                              |
+| --------------------------------------------------- | ------------------------- | --------------------------------------------------- |
+| /api/v1/spotify/featured                            | Get featured list         |
+| /api/v1/spotify/search?query={string}&type={string} | Search by query and type  | Available types : album , artist , playlist , track |
+| /api/v1/spotify/new-releases                        | Get new releases list     |
+| /api/v1/spotify/categories                          | Get categories            |
+| /api/v1/spotify/track/{track_id}                    | Get track by id           |
+| /api/v1/spotify/playlists/{playlist_id}             | Get playlist by id        |
+| /api/v1/spotify/genres                              | Get genres                |
+| /api/v1/spotify/categories/{category_id}/playlists  | Get playlists by category |
 
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/chingu-voyage5/Bears-Team-32.svg?columns=all)](https://waffle.io/chingu-voyage5/Bears-Team-32)
 
