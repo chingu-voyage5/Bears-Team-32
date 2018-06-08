@@ -48,6 +48,18 @@ a:focus, a:hover {
     padding: 0 16px;
 }
 
+.playerBar,
+.playerBar button,
+.playerBar input {
+    /* style on the body in original */
+    color: hsla(0,0%,100%,0.6);
+    text-transform: none;
+}
+
+/* ============================== */
+/* Styling of left of Player bar */
+/* ============================== */
+
 .player__left {
     width: 30%;
     min-width: 180px;
@@ -113,11 +125,94 @@ a:focus, a:hover {
     color:#fff;
 }
 
+/* =============================== */
+/* Styling of center of Player bar */
+/* =============================== */
+
 .player__center {
     width: 40%;
     max-width: 722px;
-    background-color: pink; /* debug */
+    background-color: blue; /* debug */
 }
+
+.player-controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.player-controls__buttons {
+    margin-bottom: 12px;
+    display: flex;
+    width: 224px;
+    flex-flow: row nowrap;
+}
+
+.playback-bar {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.playback-bar__progress-time {
+    font-size: 11px;
+    line-height: 16px;
+    letter-spacing: .015em;
+    min-width: 40px;
+    text-align: center;
+}
+
+.progress-bar {
+    height: 12px;
+    position: relative;
+    width: 100%;
+}
+
+.middle-align {
+    position: absolute;
+    top: 5px;
+    transform: translateY(-50%);
+}
+
+.progress-bar__bg {
+    background-color: #404040;
+    border-radius: 2px;
+    display: flex;
+    height: 4px;
+    width: 100%;
+}
+
+.progress-bar__fg {
+    transition-property: background-color;
+    transition-duration: .1s;
+    transition-timing-function: cubic-bezier(1,0,.7,1);
+    background-color: #b3b3b3;
+    border-radius: 2px;
+    height: 4px;
+    width: 0;
+}
+
+.progress-bar__slider {
+    transition-property: transform;
+    transition-duration: .1s;
+    transition-timing-function: cubic-bezier(1,0,.7,1);
+    background-color: #fff;
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    margin-left: -6px;
+    margin-top: -6px;
+    z-index: 100;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .5);
+    transform: scale(0);
+}
+
+/* ============================== */
+/* Styling of right of Player bar */
+/* ============================== */
 
 .player__right {
     width: 30%;
