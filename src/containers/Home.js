@@ -4,12 +4,14 @@ import Layout from '../components/Layout';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
 
+const apiBase = 'https://jffy-api.herokuapp.com/api/v1/spotify';
+
 const Links = [
-  { name: 'featured', to: '/browse/featured' },
-  { name: 'podcasts', to: '/browse/podcasts' },
-  { name: 'genres & moods', to: '/browse/genres' },
-  { name: 'new releases', to: '/browse/newreleases' },
-  { name: 'discover', to: '/browse/discover' },
+  // { name: 'podcasts', to: '/browse/podcasts' },
+  { name: 'featured', to: '/browse/featured', api: `${apiBase}/featured` },
+  { name: 'genres & moods', to: '/browse/genres', api: `${apiBase}/categories` },
+  { name: 'new releases', to: '/browse/newreleases', api: `${apiBase}/new-releases` },
+  { name: 'discover', to: '/browse/discover', api: `${apiBase}/discover` },
 ];
 
 const bgColors = {
@@ -64,11 +66,13 @@ class Home extends Component {
 
         <div>
           <Switch>
-            <Route path="/browse/podcasts" render={() => <Layout name={'podcasts'} />} />
-            <Route path="/browse/genres" render={() => <Layout name={'genres'} />} />
-            <Route path="/browse/newreleases" render={() => <Layout name={'newreleases'} />} />
-            <Route path="/browse/discover" render={() => <Layout name={'discover'} />} />
-            <Route render={() => <Layout name={'Featured'} />} />
+            {Links.map(link => {
+              const layoutComp = <Layout name={link.name} api={link.api} />;
+              if (link.name !== 'featured') {
+                return <Route path={link.to} render={() => layoutComp} key={link.name} />;
+              }
+            })}
+            <Route render={() => <Layout name={Links[0].name} api={Links[0].api} />} />
           </Switch>
         </div>
       </Wrapper>
