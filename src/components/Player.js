@@ -57,8 +57,9 @@ class Player__center extends Component {
             <button className="control-button">
               <FontAwesome name="step-backward fa-lg" />
             </button>
-            <button className="control-button">
-              <FontAwesome name="play fa-lg" className="control-button--circled"/>
+            <button className="control-button control-button--circled">
+              {/* <FontAwesome name="play fa-sm"/> */}
+              <FontAwesome name="pause fa-sm"/>
             </button>
             <button className="control-button">
               <FontAwesome name="step-forward fa-lg" />

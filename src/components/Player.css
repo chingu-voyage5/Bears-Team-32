@@ -250,3 +250,12 @@ a:focus, a:hover {
     border-radius: 500px;
     border: 1px solid hsla(0, 0%, 100%, .6);
 }
+
+.control-button--circled:hover {
+    transform: scale(1.06);
+}
+
+.control-button--circled:hover::after {
+    color: #fff;
+    transform: scale(1.06);
+}
