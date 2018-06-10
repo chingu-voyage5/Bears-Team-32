@@ -58,7 +58,7 @@ class Player__center extends Component {
               <FontAwesome name="step-backward fa-lg" />
             </button>
             <button className="control-button">
-              <FontAwesome name="play-circle fa-lg" />
+              <FontAwesome name="play fa-lg" className="control-button--circled"/>
             </button>
             <button className="control-button">
               <FontAwesome name="step-forward fa-lg" />
@@ -68,7 +68,6 @@ class Player__center extends Component {
             </button>
           </div>
           <div className="playback-bar">
-            {/* Playback bar */}
             <div className="playback-bar__progress-time">2:43</div>
             <div className="progress-bar">
               <div className="middle-align progress-bar__bg">

@@ -132,7 +132,6 @@ a:focus, a:hover {
 .player__center {
     width: 40%;
     max-width: 722px;
-    background-color: blue; /* debug */
 }
 
 .player-controls {
@@ -146,6 +145,7 @@ a:focus, a:hover {
     margin-bottom: 12px;
     display: flex;
     width: 224px;
+    justify-content: space-between;
     flex-flow: row nowrap;
 }
 
@@ -238,4 +238,15 @@ a:focus, a:hover {
 
 .control-button:hover {
     color: #fff;
+}
+
+.control-button--circled::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    border-radius: 500px;
+    border: 1px solid hsla(0, 0%, 100%, .6);
 }
