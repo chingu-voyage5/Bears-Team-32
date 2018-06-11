@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 const SearchTypes = ['album', 'artist', 'playlist', 'track'];
-const LocalApiServer = 'http://localhost:3001';
-const RemoteApiServer = 'https://jffy-api.herokuapp.com';
+// const LocalApiServer = 'http://localhost:3001';
+const LocalApiServer = 'https://jffy-api.herokuapp.com';
 
 class SearchBar extends Component {
   timeoutID = null;

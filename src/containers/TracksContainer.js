@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import axios from 'axios';
-const url = 'http://localhost:3001/api/v1/spotify/?query';
+// const url = 'http://localhost:3001/api/v1/spotify/?query';
+const url = 'https://jffy-api.herokuapp.com/api/v1/spotify/?query';
 
 class ArtistTracks extends Component {
   state = { tracks: [] };
 
   componentDidMount() {
-    const { match, name } = this.props;
+    const { match } = this.props;
     const query = `https://api.spotify.com/v1/artists/${match.params.id}/top-tracks/?country=us`;
     axios.get(`${url}=${query}`).then(({ data }) => {
       this.setState({ tracks: data.tracks });
@@ -33,7 +34,7 @@ class AlbumTracks extends Component {
   state = { tracks: [] };
 
   componentDidMount() {
-    const { match, name } = this.props;
+    const { match } = this.props;
     const query = `https://api.spotify.com/v1/albums/${match.params.id}`;
     axios.get(`${url}=${query}`).then(({ data }) => {
       this.setState({ tracks: data.tracks.items });
@@ -60,7 +61,7 @@ class PlaylistTracks extends Component {
   state = { tracks: [] };
 
   componentDidMount() {
-    const { match, name } = this.props;
+    const { match } = this.props;
     const query = `https://api.spotify.com/v1/users/spotify/playlists/${match.params.id}`;
     axios.get(`${url}=${query}`).then(({ data }) => {
       this.setState({ tracks: data.tracks.items });
