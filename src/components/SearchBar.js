@@ -16,7 +16,7 @@ class SearchBar extends Component {
     this.timeoutID = setTimeout(() => {
       let promises = SearchTypes.map(type => {
         return axios.get(
-          `${RemoteApiServer}/api/v1/spotify/search/?query=${input.value}&type=${type}`,
+          `${LocalApiServer}/api/v1/spotify/search/?query=${input.value}&type=${type}`,
         );
       });
 

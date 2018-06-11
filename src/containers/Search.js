@@ -3,7 +3,7 @@ import { Route, Switch, Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import styled from 'styled-components';
 import SearchBar from '../components/SearchBar';
-import Layout from '../components/Layout';
+import SearchResult from './SearchResult';
 
 const Links = [
   { name: 'recent searches', to: '/search/recent' },
@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   height: 100%;
 `;
 
-const SearchResult = styled.div`
+const SearchContent = styled.div`
   background-color: black;
   display: flex;
   flex-direction: column;
@@ -60,7 +60,7 @@ const Menu = styled.div`
 `;
 
 class Search extends Component {
-  state = { currentLink: Links[0], searchData: {} };
+  state = { currentLink: Links[0], searchData: [] };
 
   componentDidUpdate() {
     if (this.props.location.pathname.includes('/search')) {
@@ -85,8 +85,12 @@ class Search extends Component {
   };
 
   searchHandler = data => {
-    console.log(data);
     this.setState({ searchData: data });
+  };
+
+  hasSearchData = () => {
+    console.log(Object.keys(this.state.searchData).length);
+    return Object.keys(this.state.searchData).length !== 0;
   };
 
   render() {
@@ -95,30 +99,51 @@ class Search extends Component {
     return (
       <Wrapper>
         <SearchBar searchHandler={this.searchHandler} />
-        <SearchResult>
-          <Menu>
-            {Links.map(link => (
-              <StyledLink
-                key={link.to}
-                to={link.to}
-                onClick={() => this.clickHandler(link.name)}
-                selected={currentLink.name === link.name}
-              >
-                {link.name}
-              </StyledLink>
-            ))}
-          </Menu>
+        <SearchContent>
+          {this.hasSearchData() && (
+            <Menu>
+              {Links.map(link => (
+                <StyledLink
+                  key={link.to}
+                  to={link.to}
+                  onClick={() => this.clickHandler(link.name)}
+                  selected={currentLink.name === link.name}
+                >
+                  {link.name}
+                </StyledLink>
+              ))}
+            </Menu>
+          )}
           <div>
             <Switch>
               <Route path="/search/results" render={() => <h1>results</h1>} />
-              <Route path="/search/artists" render={() => <h1>artists</h1>} />
-              <Route path="/search/tracks" render={() => <h1>tracks</h1>} />
-              <Route path="/search/albums" render={() => <h1>albums</h1>} />
-              <Route path="/search/playlists" render={() => <h1>playlists</h1>} />
-              <Route render={() => <h1>recent</h1>} />
+              <Route
+                path="/search/artists"
+                render={() => (
+                  <SearchResult items={this.state.searchData['artists'].items} type="artist" />
+                )}
+              />
+              <Route
+                path="/search/tracks"
+                render={() => <SearchResult items={this.state.searchData['tracks'].items} />}
+              />
+
+              <Route
+                path="/search/albums"
+                render={() => (
+                  <SearchResult items={this.state.searchData['albums'].items} type="album" />
+                )}
+              />
+              <Route
+                path="/search/playlists"
+                render={() => (
+                  <SearchResult items={this.state.searchData['playlists'].items} type="playlist" />
+                )}
+              />
+              <Route render={() => <h1>Recent</h1>} />
             </Switch>
           </div>
-        </SearchResult>
+        </SearchContent>
       </Wrapper>
     );
   }

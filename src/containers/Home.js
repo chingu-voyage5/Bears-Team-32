@@ -71,6 +71,7 @@ class Home extends Component {
               if (link.name !== 'featured') {
                 return <Route path={link.to} render={() => layoutComp} key={link.name} />;
               }
+              return null;
             })}
             <Route render={() => <Layout name={Links[0].name} api={Links[0].api} />} />
           </Switch>
