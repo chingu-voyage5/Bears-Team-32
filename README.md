@@ -14,9 +14,19 @@ src
  |-- containers (for stateful components)
 ```
 
-## API Usage
+## API Usage..
 
 ### Base URL : https://jffy-api.herokuapp.com
+
+```
+Use together with Spotify end points
+https://jffy-api.herokuapp.com/?query={:spotify api}
+
+exmple :
+https://jffy-api.herokuapp.com/?query=https://api.spotify.com/v1/tracks/1CkvWZme3pRgbzaxZnTl5X
+```
+
+#### Presset endpoints
 
 | End point                                           | Purpose                   | Remark                                              |
 | --------------------------------------------------- | ------------------------- | --------------------------------------------------- |
