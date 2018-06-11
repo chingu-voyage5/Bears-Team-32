@@ -89,7 +89,6 @@ class Search extends Component {
   };
 
   hasSearchData = () => {
-    console.log(Object.keys(this.state.searchData).length);
     return Object.keys(this.state.searchData).length !== 0;
   };
 

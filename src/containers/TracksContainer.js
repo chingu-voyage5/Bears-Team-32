@@ -8,7 +8,7 @@ class ArtistTracks extends Component {
 
   componentDidMount() {
     const { match, name } = this.props;
-    const query = `https://api.spotify.com/v1/artists/${match.params.id}/top-tracks/?country=nz`;
+    const query = `https://api.spotify.com/v1/artists/${match.params.id}/top-tracks/?country=us`;
     axios.get(`${url}=${query}`).then(({ data }) => {
       this.setState({ tracks: data.tracks });
     });
