@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import axios from 'axios';
+import styled from 'styled-components';
 // const url = 'http://localhost:3001/api/v1/spotify/?query';
 const url = 'https://jffy-api.herokuapp.com/api/v1/spotify/?query';
 
@@ -17,15 +18,13 @@ class ArtistTracks extends Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         {this.state.tracks.map(track => (
-          <div key={track.id}>
-            <a href={track.preview_url} target="_blank">
-              {track.name}
-            </a>
-          </div>
+          <a href={track.preview_url} target="_blank" key={track.id}>
+            {track.name}
+          </a>
         ))}
-      </div>
+      </React.Fragment>
     );
   }
 }
@@ -42,17 +41,13 @@ class AlbumTracks extends Component {
   }
   render() {
     return (
-      <div>
-        {this.state.tracks.map(track => {
-          return (
-            <div key={track.id}>
-              <a href={track.preview_url} target="_blank">
-                {track.name}
-              </a>
-            </div>
-          );
-        })}
-      </div>
+      <React.Fragment>
+        {this.state.tracks.map(track => (
+          <a href={track.preview_url} target="_blank" key={track.id}>
+            {track.name}
+          </a>
+        ))}
+      </React.Fragment>
     );
   }
 }
@@ -70,15 +65,13 @@ class PlaylistTracks extends Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         {this.state.tracks.map(track => (
-          <div key={track.track.id}>
-            <a href={track.preview_url} target="_blank">
-              {track.track.name}
-            </a>
-          </div>
+          <a href={track.preview_url} target="_blank" key={track.track.id}>
+            {track.track.name}
+          </a>
         ))}
-      </div>
+      </React.Fragment>
     );
   }
 }
@@ -89,6 +82,11 @@ const TrackComponents = {
   album: AlbumTracks,
 };
 
+const Tracks = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 class TracksContainer extends Component {
   render() {
     const path = `/${this.props.name}/:id`;
@@ -96,7 +94,9 @@ class TracksContainer extends Component {
     return (
       <div>
         <h1>{this.props.name}</h1>
-        <Route path={path} render={props => <Component name={this.props.name} {...props} />} />
+        <Tracks>
+          <Route path={path} render={props => <Component name={this.props.name} {...props} />} />
+        </Tracks>
       </div>
     );
   }
