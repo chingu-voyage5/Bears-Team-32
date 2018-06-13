@@ -5,7 +5,7 @@ import Layout from "../components/Layout";
 import moment from "moment";
 import styled from "styled-components";
 import { HeadingPrimary } from "../components/style-utils";
-import Playlist from "../components/Playlist";
+import Track from "../components/Track";
 
 const TracksWrapper = styled.div`
    width: 100%;
@@ -28,17 +28,17 @@ const TrackDesc = styled.div`
    padding-bottom: 2rem;
 `;
 
-const Track = ({ item }) => {
-   return (
-      <React.Fragment>
-         <TrackHeader>
-            <div>{item.name}</div>
-            <div>{moment(item.duration_ms).format("m:ss")}</div>
-         </TrackHeader>
-         <TrackDesc>{`${item.artists[0].name}.${item.album.name}`}</TrackDesc>
-      </React.Fragment>
-   );
-};
+// const Track = ({ item }) => {
+//    return (
+//       <React.Fragment>
+//          <TrackHeader>
+//             <div>{item.name}</div>
+//             <div>{moment(item.duration_ms).format("m:ss")}</div>
+//          </TrackHeader>
+//          <TrackDesc>{`${item.artists[0].name}.${item.album.name}`}</TrackDesc>
+//       </React.Fragment>
+//    );
+// };
 
 class SearchResult extends Component {
    getItems = () => {
@@ -54,7 +54,7 @@ class SearchResult extends Component {
                artists = [track.artists[0].name];
             }
             return (
-               <Playlist
+               <Track
                   type={type}
                   key={track.id}
                   artists={artists}
