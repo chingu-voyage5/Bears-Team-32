@@ -59,31 +59,6 @@ class AlbumTracks extends Component {
    }
 }
 
-///////////////////////////////
-/// Track START
-///////////////////////////////
-
-// const PlaylistContainer = styled.section`
-//    display: grid;
-//    grid-template-columns: 30% 1fr;
-// `;
-
-// const CardWrapper = styled.div`
-//    grid-column: 1/2;
-//    margin-top: 4rem;
-// `;
-
-// const TracksWrapper = styled.div`
-//    grid-column: 2/3;
-// `;
-
-// const Paragraph = styled.p`
-//    padding: 0.5rem 0;
-//    font-weight: 400;
-//    color: rgba(255, 255, 255, 0.6);
-//    font-size: 0.8rem;
-// `;
-
 class PlaylistTracks extends Component {
    state = {
       tracks: [],
@@ -126,63 +101,8 @@ class PlaylistTracks extends Component {
             tracks={this.state.tracks}
          />
       );
-      // const { description, name, type, tracks } = this.state.playlistInfo;
-      // console.log("state destructured: ", description, name, type, tracks);
-      // console.log("total: ", this.state.tracksTotal);
-
-      // const tracksPlaylist = this.state.tracks.map(track => {
-      //    let artists = [];
-      //    if (track.track.artists.length > 1) {
-      //       track.track.artists.map(artist => {
-      //          artists.push(artist.name);
-      //       });
-      //    } else {
-      //       artists = [track.track.artists[0].name];
-      //    }
-
-      //    return (
-      //       <Track
-      //          name={name}
-      //          key={track.track.id}
-      //          artists={artists}
-      //          trackName={track.track.name}
-      //          albumName={track.track.album.name}
-      //          trackDuration={track.track.duration_ms}
-      //          explicit={track.track.explicit}
-      //       />
-      //    );
-      // });
-
-      // return (
-      //    <PlaylistContainer>
-      //       <CardWrapper>
-      //          <Card
-      //             noshadow="true"
-      //             big="true"
-      //             image={this.state.albumImageURL}
-      //             name={name}
-      //          />
-      //          <Paragraph>{this.state.playlistOwner}</Paragraph>
-      //          <Paragraph>{description}</Paragraph>
-      //          <Paragraph>{this.state.tracksTotal} Songs</Paragraph>
-      //          <ButtonPrimary>Play</ButtonPrimary>
-      //       </CardWrapper>
-      //       <TracksWrapper>{tracksPlaylist}</TracksWrapper>
-      //    </PlaylistContainer>
-      //    // <React.Fragment>
-      //    //    {this.state.tracks.map(track => (
-      //    //          <a href={track.preview_url} target="_blank" key={track.track.id}>
-      //    //             {track.track.name}
-      //    //          </a>
-      //    //       ))}
-      //    // </React.Fragment>
-      // );
    }
 }
-
-///////////////////////////////
-/// Playlist END
-///////////////////////////////
 
 const TrackComponents = {
    playlist: PlaylistTracks,
