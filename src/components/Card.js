@@ -2,13 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import FontAwesome from "react-fontawesome";
 import "font-awesome/css/font-awesome.css";
+import { displayArtistName } from "./style-utils";
 
 const Figure = styled.figure`
    display: inline-block;
-   border-radius: ${props => (props.circle ? "50%" : "none")};
    width: ${props => (props.big ? "19rem" : "13rem")};
    height: ${props => (props.big ? "19rem" : "13rem")};
-   box-shadow: ${props => (props.noshadow ? "none" : "var(--shadow-section)")};
+   /* box-shadow: ${props =>
+      props.noshadow ? "none" : "var(--shadow-section)"}; */
    margin-bottom: 2.5rem;
    margin-bottom: ${props => (props.big ? "4rem" : "2.5")};
    position: relative;
@@ -43,6 +44,14 @@ const Figure = styled.figure`
       filter: brightness(50%);
    }
 
+   img {
+      box-shadow: ${props =>
+         props.noshadow ? "none" : "var(--shadow-section)"};
+      border-radius: ${props => (props.circle ? "50%" : "none")};
+      width: 100%;
+      height: 100%;
+   }
+
    figcaption {
       color: var(--color-white);
       text-align: center;
@@ -51,17 +60,44 @@ const Figure = styled.figure`
       padding: ${props => (props.big ? "1.2rem" : "0.4rem")};
    }
 
-   img {
-      width: 100%;
-      height: 100%;
+   p{
+      /* display: ${props => (props.type ? "grid" : "none")}; */
+      /* color: var(--color-white-alpha); */
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 300;
+      font-size: .8rem;
+      text-align: center;
    }
+
 `;
 
+// const Card = ({ type, image, name, artists }, ...props) => {
 const Card = props => {
+   let artistsArray = [];
+
+   if (props.artists) {
+      const { artists } = props;
+      if (props.artists.length > 1) {
+         props.artists.map(artist => {
+            artistsArray.push(artist.name);
+         });
+      } else {
+         artistsArray = [props.artists[0].name];
+      }
+
+      console.log("card props: ", displayArtistName(artists));
+      console.log("one artist", artistsArray[0]);
+   }
+
    return (
       <Figure noshadow={props.noshadow} circle={props.circle} big={props.big}>
-         <img src={props.image} alt="Random " />
+         <img src={props.image} circle={props.circle} alt="Random " />
          <figcaption big={props.big}>{props.name}</figcaption>
+         {props.type === "album" && props.artists ? (
+            <p type={props.type}>{displayArtistName(artistsArray)}</p>
+         ) : // ? `${<p type={props.type}>{artistsArray[0]}</p>}`
+         // ? `${<p type={props.type}>{displayArtistName(artists)}</p>}`
+         null}
          <button>
             <FontAwesome name="play-circle" />
          </button>

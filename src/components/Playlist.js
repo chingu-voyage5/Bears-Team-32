@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Card from "../components/Card";
 import Track from "../components/Track";
 import ButtonPrimary from "../components/ButtonPrimary";
+import { makeArtistArray } from "./style-utils";
 
 const PlaylistContainer = styled.section`
    display: grid;
@@ -30,24 +31,25 @@ const Playlist = ({
    playlistImageURL,
    playlistDescription,
    playlistName,
-   dataType,
    playlistOwner,
    tracks
 }) => {
    const tracksPlaylist = tracks.map(track => {
-      let artists = [];
+      console.log("playlists artists: ", track.track.artists);
+
+      let artistsArray = [];
       if (track.track.artists.length > 1) {
          track.track.artists.map(artist => {
-            artists.push(artist.name);
+            artistsArray.push(artist.name);
          });
       } else {
-         artists = [track.track.artists[0].name];
+         artistsArray = [track.track.artists[0].name];
       }
 
       return (
          <Track
             key={track.track.id}
-            artists={artists}
+            artists={artistsArray}
             trackName={track.track.name}
             albumName={track.track.album.name}
             trackDuration={track.track.duration_ms}

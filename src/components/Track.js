@@ -1,41 +1,40 @@
 import React from "react";
 import styled from "styled-components";
+import { displayArtistName } from "./style-utils";
 
 const PlaylistWrapper = styled.section`
-position:relative;
+   position: relative;
    display: grid;
    width: 90%;
    font-size: 0.8rem;
-   /* grid-template-columns: ${props =>
-      props.type === "track" ? "1% 1fr" : "30% 1fr"}; */
    grid-template-columns: 1% 1fr;
    grid-gap: 2rem;
-   transition: all .3s;
+   transition: all 0.3s;
 
-   &:hover{
-         background: rgba(0,0,0, .1);
+   &:hover {
+      background: rgba(0, 0, 0, 0.1);
    }
-   span:first-child::before{
-         position: absolute;
-         left: -2rem;
-         top: 1rem;
-         font-family: FontAwesome;
-         content: "\f001";
-         color: rgba(255, 255, 255, 0.6);
-         transform: scale(1.1);
+   span:first-child::before {
+      position: absolute;
+      left: -2rem;
+      top: 1rem;
+      font-family: FontAwesome;
+      content: "\f001";
+      color: rgba(255, 255, 255, 0.6);
+      /* transform: scale(1.1); */
    }
-   &:hover span:first-child::before{
-         position: absolute;
-         left: -2rem;
-         top: 1rem;
-         font-family: FontAwesome;
-         content: "\f04b";
-         color: var(--color-white);
-         transform: scale(1.1);
+   &:hover span:first-child::before {
+      position: absolute;
+      left: -2rem;
+      top: 1rem;
+      font-family: FontAwesome;
+      content: "\f04b";
+      color: var(--color-white);
+      /* transform: scale(1.1); */
    }
-      &:hover a{
-            display: grid;
-      }
+   &:hover a {
+      /* display: grid; */
+   }
 `;
 
 const TrackWraper = styled.section`
@@ -62,6 +61,7 @@ const RowContainer = styled.span`
    color: rgba(255, 255, 255, 0.6);
    grid-row: 2/3;
    grid-gap: 0.5rem;
+   justify-content: start;
 `;
 
 const Explicit = styled.span`
@@ -87,7 +87,10 @@ const Name = styled.a`
 `;
 
 const Dot = styled.span`
+   margin-top: -5px;
    grid-row: 1/2;
+   font-weight: 900;
+   font-size: 1.3rem;
 `;
 
 const MenuEllipsis = styled.a`
@@ -124,16 +127,7 @@ const Track = ({ artists, trackName, albumName, trackDuration, explicit }) => {
                <Explicit explicit={explicit}>
                   {explicit ? "EXPLICIT" : null}
                </Explicit>
-               <Name href="#">
-                  {artists.length > 1
-                     ? artists.map(
-                          artist =>
-                             artist === artists[artists.length - 1]
-                                ? artist
-                                : `${artist}, `
-                       )
-                     : artists[0]}
-               </Name>
+               <Name href="#">{displayArtistName(artists)}</Name>
                <Dot>&sdot;</Dot>
                <Name href="#">{albumName}</Name>
                <MenuEllipsis href="#">&hellip;</MenuEllipsis>
