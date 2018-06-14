@@ -57,15 +57,29 @@ class Artist extends Component {
       <div id={`artist-${artist.id}`}>
         <ArtistHeader artist={artist} />
         <div>
-          <Layout header="Popular">{topTracks.map(track => <div>{track.name}</div>)}</Layout>
+          <Layout header="Popular">
+            {topTracks.map(track => <div key={track.id}>{track.name}</div>)}
+          </Layout>
           <Layout header="Ablums">
             {albums.map(album => (
-              <Card key={album.id} name={album.name} image={album.images[0].url} />
+              <Card
+                key={album.id}
+                name={album.name}
+                image={album.images[0].url}
+                type="album"
+                artists={[artist]}
+              />
             ))}
           </Layout>
           <Layout header="Singles">
             {singles.map(single => (
-              <Card key={single.id} name={single.name} image={single.images[0].url} />
+              <Card
+                key={single.id}
+                name={single.name}
+                image={single.images[0].url}
+                type="album"
+                artists={[artist]}
+              />
             ))}
           </Layout>
         </div>

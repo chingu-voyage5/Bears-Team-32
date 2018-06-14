@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import axios from 'axios';
-import styled from 'styled-components';
 import Artist from '../components/Artist';
+import Playlist from '../components/Playlist';
+
 // const url = 'http://localhost:3001/api/v1/spotify/?query';
 const url = 'https://jffy-api.herokuapp.com/api/v1/spotify/?query';
 
@@ -30,25 +31,44 @@ class AlbumTracks extends Component {
 }
 
 class PlaylistTracks extends Component {
-  state = { tracks: [] };
+  state = {
+    tracks: [],
+    tracksTotal: null,
+    playlistImageURL: '',
+    playlistDescription: '',
+    playlistName: '',
+    playlistOwner: '',
+    ablbumName: '',
+    dataType: '',
+  };
 
   componentDidMount() {
     const { match } = this.props;
     const query = `https://api.spotify.com/v1/users/spotify/playlists/${match.params.id}`;
     axios.get(`${url}=${query}`).then(({ data }) => {
-      this.setState({ tracks: data.tracks.items });
+      console.log('track list: ', data);
+      this.setState({
+        tracks: data.tracks.items,
+        tracksTotal: data.tracks.total,
+        playlistImageURL: data.images[0].url,
+        playlistDescription: data.description,
+        playlistName: data.name,
+        playlistOwner: data.owner.display_name,
+        dataType: data.type,
+      });
     });
   }
 
   render() {
     return (
-      <React.Fragment>
-        {this.state.tracks.map(track => (
-          <a href={track.preview_url} target="_blank" key={track.track.id}>
-            {track.track.name}
-          </a>
-        ))}
-      </React.Fragment>
+      <Playlist
+        tracksTotal={this.state.tracksTotal}
+        playlistImageURL={this.state.playlistImageURL}
+        playlistDescription={this.state.playlistDescription}
+        playlistName={this.state.playlistName}
+        playlistOwner={this.state.playlistOwner}
+        tracks={this.state.tracks}
+      />
     );
   }
 }
