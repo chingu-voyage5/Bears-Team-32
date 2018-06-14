@@ -40,8 +40,7 @@ const Track = ({ item }) => {
 };
 
 class SearchResult extends Component {
-  getItems = () => {
-    const { items, type } = this.props;
+  getItems = ({ items, type }) => {
     if (type === 'track') {
       return (
         <TracksWrapper>
@@ -63,8 +62,7 @@ class SearchResult extends Component {
   };
 
   render() {
-    const { items, type } = this.props;
-    return this.getItems();
+    return this.getItems(this.props);
   }
 }
 
