@@ -19,20 +19,44 @@ class ArtistTracks extends Component {
          match.params.id
       }/top-tracks/?country=us`;
       axios.get(`${url}=${query}`).then(({ data }) => {
+         // console.log("artist tracks axios", data);
+
          this.setState({ tracks: data.tracks });
       });
    }
 
    render() {
-      return (
-         <React.Fragment>
-            {this.state.tracks.map(track => (
-               <a href={track.preview_url} target="_blank" key={track.id}>
-                  {track.name}
-               </a>
-            ))}
-         </React.Fragment>
-      );
+      // console.log("artisttracks", this.state.tracks);
+      const artistTracksList = this.state.tracks.map(track => {
+         // console.log(
+         //    "inside loop: ",
+         //    track.name,
+         //    track.explicit,
+         //    track.album.images[2].url
+         // );
+
+         return (
+            <Track
+               type="artist"
+               key={track.id}
+               albumImage={track.album.images[2].url}
+               trackName={track.name}
+               trackDuration={track.duration_ms}
+               explicit={track.explicit}
+            />
+         );
+      });
+      return artistTracksList;
+      // (
+
+      //    <React.Fragment>
+      //       {this.state.tracks.map(track => (
+      //          <a href={track.preview_url} target="_blank" key={track.id}>
+      //             {track.name}
+      //          </a>
+      //       ))}
+      //    </React.Fragment>
+      // );
    }
 }
 

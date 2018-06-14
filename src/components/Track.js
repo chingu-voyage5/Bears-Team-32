@@ -5,47 +5,60 @@ import { displayArtistName } from "./style-utils";
 const PlaylistWrapper = styled.section`
    position: relative;
    display: grid;
-   width: 90%;
+   width: ${props => (props.type === "artist" ? "70%" : "90%")};
+   grid-template-columns: ${props =>
+      props.type === "artist" ? "100px 1fr" : "1% 1fr"};
+   margin: 0 auto;
    font-size: 0.8rem;
-   grid-template-columns: 1% 1fr;
-   grid-gap: 2rem;
+   /* grid-template-columns: 1% 1fr; */
+   grid-gap: 1rem;
    transition: all 0.3s;
 
    &:hover {
       background: rgba(0, 0, 0, 0.1);
    }
+
    span:first-child::before {
       position: absolute;
-      left: -2rem;
-      top: 1rem;
+      left: ${props => (props.type === "artist" ? "-6rem" : "-2rem")};
+      top: ${props => (props.type === "artist" ? "1.6rem" : "1 rem")};
       font-family: FontAwesome;
       content: "\f001";
       color: rgba(255, 255, 255, 0.6);
-      /* transform: scale(1.1); */
+      /* transform: scale(1.2); */
    }
+
    &:hover span:first-child::before {
       position: absolute;
-      left: -2rem;
-      top: 1rem;
+      left: ${props => (props.type === "artist" ? "-6rem" : "-2rem")};
+      top: ${props => (props.type === "artist" ? "1.6rem" : "1 rem")};
       font-family: FontAwesome;
       content: "\f04b";
       color: var(--color-white);
-      /* transform: scale(1.1); */
+      /* transform: scale(1.2); */
    }
    &:hover a {
-      /* display: grid; */
+      display: grid;
    }
+`;
+
+const AlbumImage = styled.img`
+   /* display: ${props => (props.type === "artist" ? "grid" : "none")}; */
+   align-self: center;
+   justify-self: right;
+   grid-column: 1/2;
+   width: 50px;
+   height: 50px;
+   background-color: rgba(111, 111, 255, 0.1);
 `;
 
 const TrackWraper = styled.section`
    position: relative;
-
-   display: grid;
+   display: inline-grid;
    grid-column: 2/3;
    justify-content: start;
-   grid-template-columns: repeat(autofill, minmax(min-content, 1fr));
-   grid-template-rows: 100% 1fr;
-   /* background: rgba(0, 255, 255, 0.1); */
+   grid-template-columns: repeat(auto-fill, minmax(min-content, max-content));
+   /* grid-template-rows: 100% 1fr; */
    padding: 1rem 0;
    grid-gap: 0.5rem;
 `;
@@ -53,25 +66,35 @@ const TrackWraper = styled.section`
 const TrackName = styled.span`
    grid-row: 1/2;
    justify-self: start;
-   font-size: 1.1rem;
+   font-size: 1rem;
+   width: max-content;
 `;
-
-const RowContainer = styled.span`
-   display: grid;
-   color: rgba(255, 255, 255, 0.6);
-   grid-row: 2/3;
-   grid-gap: 0.5rem;
-   justify-content: start;
-`;
+// const ExplicitContainer = styled.div`
+//    grid-row: 2/3;
+//    width: min-content;
+// `;
 
 const Explicit = styled.span`
-   display: ${props => (props.explicit ? "inline-grid" : "none")};
-   grid-row: 1/2;
+   display: ${props => (props.explicit ? "grid" : "none")};
+   grid-row: ${props => (props.type === "artist" ? "2/3" : "1/2")};
+   /* grid-column: 1/2; */
    font-weight: 300;
    padding: 2px 5px;
    background-color: rgba(255, 255, 255, 0.6);
    color: black;
    border-radius: 2px;
+   /* width: 11rem; */
+   /* width: min-content; */
+`;
+
+const RowContainer = styled.span`
+   display: grid;
+   color: rgba(255, 255, 255, 0.6);
+   /* grid-column: ${props => (props.type === "artist" ? "2/-1" : "")}; */
+   grid-row: 2/3;
+   grid-gap: 0.5rem;
+   justify-content: start;
+   justify-items: start;
 `;
 
 const Name = styled.a`
@@ -111,7 +134,15 @@ const TrackDuration = styled.span`
    font-size: 1rem;
 `;
 
-const Track = ({ artists, trackName, albumName, trackDuration, explicit }) => {
+const Track = ({
+   type,
+   albumImage,
+   artists,
+   trackName,
+   albumName,
+   trackDuration,
+   explicit
+}) => {
    function millisToMinutesAndSeconds(millis) {
       const minutes = Math.floor(millis / 60000);
       const seconds = ((millis % 60000) / 1000).toFixed(0);
@@ -119,18 +150,32 @@ const Track = ({ artists, trackName, albumName, trackDuration, explicit }) => {
          ? minutes + 1 + ":00"
          : minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
    }
+   console.log("albumImage: ", type, albumImage);
+
    return (
-      <PlaylistWrapper>
+      <PlaylistWrapper type="artist">
+         {type === "artist" && albumImage ? (
+            <AlbumImage type="artist" url={albumImage} alt="Album Image" />
+         ) : null}
          <TrackWraper>
             <TrackName>{trackName}</TrackName>
+            {/* <ExplicitContainer> */}
+            {/* </ExplicitContainer> */}
+
             <RowContainer>
                <Explicit explicit={explicit}>
                   {explicit ? "EXPLICIT" : null}
                </Explicit>
-               <Name href="#">{displayArtistName(artists)}</Name>
-               <Dot>&sdot;</Dot>
-               <Name href="#">{albumName}</Name>
+               {type !== "artist" ? (
+                  <React.Fragment>
+                     <Name href="#">{displayArtistName(artists)}</Name>
+                     <Dot>&sdot;</Dot>
+                     <Name href="#">{albumName}</Name>
+                  </React.Fragment>
+               ) : null}
+
                <MenuEllipsis href="#">&hellip;</MenuEllipsis>
+
                <TrackDuration>
                   {millisToMinutesAndSeconds(trackDuration)}
                </TrackDuration>

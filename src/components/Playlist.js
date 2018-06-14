@@ -13,6 +13,7 @@ const PlaylistContainer = styled.section`
 const CardWrapper = styled.div`
    grid-column: 1/2;
    margin-top: 4rem;
+   justify-self: end;
 `;
 
 const TracksWrapper = styled.div`
@@ -35,8 +36,6 @@ const Playlist = ({
    tracks
 }) => {
    const tracksPlaylist = tracks.map(track => {
-      console.log("playlists artists: ", track.track.artists);
-
       let artistsArray = [];
       if (track.track.artists.length > 1) {
          track.track.artists.map(artist => {
@@ -68,7 +67,7 @@ const Playlist = ({
             />
             <Paragraph>{playlistOwner}</Paragraph>
             <Paragraph>{playlistDescription}</Paragraph>
-            <Paragraph>{tracksTotal} Songs</Paragraph>
+            <Paragraph>{tracksTotal} SONGS</Paragraph>
             <ButtonPrimary>Play</ButtonPrimary>
          </CardWrapper>
          <TracksWrapper>{tracksPlaylist}</TracksWrapper>

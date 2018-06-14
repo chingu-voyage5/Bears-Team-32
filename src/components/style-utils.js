@@ -25,8 +25,6 @@ export const respond = {
 // };
 
 export const displayArtistName = artists => {
-   console.log("displayartist:", artists, typeof artists);
-
    return artists && artists.length > 1
       ? artists.map(
            artist =>

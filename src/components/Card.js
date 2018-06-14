@@ -8,8 +8,6 @@ const Figure = styled.figure`
    display: inline-block;
    width: ${props => (props.big ? "19rem" : "13rem")};
    height: ${props => (props.big ? "19rem" : "13rem")};
-   /* box-shadow: ${props =>
-      props.noshadow ? "none" : "var(--shadow-section)"}; */
    margin-bottom: 2.5rem;
    margin-bottom: ${props => (props.big ? "4rem" : "2.5")};
    position: relative;
@@ -71,7 +69,6 @@ const Figure = styled.figure`
 
 `;
 
-// const Card = ({ type, image, name, artists }, ...props) => {
 const Card = props => {
    let artistsArray = [];
 
@@ -84,9 +81,6 @@ const Card = props => {
       } else {
          artistsArray = [props.artists[0].name];
       }
-
-      console.log("card props: ", displayArtistName(artists));
-      console.log("one artist", artistsArray[0]);
    }
 
    return (
@@ -95,9 +89,7 @@ const Card = props => {
          <figcaption big={props.big}>{props.name}</figcaption>
          {props.type === "album" && props.artists ? (
             <p type={props.type}>{displayArtistName(artistsArray)}</p>
-         ) : // ? `${<p type={props.type}>{artistsArray[0]}</p>}`
-         // ? `${<p type={props.type}>{displayArtistName(artists)}</p>}`
-         null}
+         ) : null}
          <button>
             <FontAwesome name="play-circle" />
          </button>

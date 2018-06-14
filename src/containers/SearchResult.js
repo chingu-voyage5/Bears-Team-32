@@ -35,7 +35,7 @@ class SearchResult extends Component {
          });
          return tracksPlaylist;
       } else if (type === "album") {
-         console.log("items", this.props);
+         console.log("album", this.props);
 
          return (
             <Layout header={type}>
