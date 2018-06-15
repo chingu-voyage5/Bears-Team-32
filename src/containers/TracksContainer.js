@@ -61,24 +61,56 @@ class ArtistTracks extends Component {
 }
 
 class AlbumTracks extends Component {
-   state = { tracks: [] };
+   // state = { tracks: [] };
+   state = {
+      tracks: [],
+      tracksTotal: null,
+      playlistImageURL: "",
+      playlistDescription: "",
+      playlistName: "",
+      // playlistOwner: "",
+      ablbumName: "",
+      dataType: "",
+      albumInfo: []
+   };
 
    componentDidMount() {
       const { match } = this.props;
       const query = `https://api.spotify.com/v1/albums/${match.params.id}`;
       axios.get(`${url}=${query}`).then(({ data }) => {
-         this.setState({ tracks: data.tracks.items });
+         // this.setState({ tracks: data.tracks.items });
+         console.log("album list: ", data);
+
+         this.setState({
+            tracks: data.tracks.items,
+            tracksTotal: data.tracks.total,
+            playlistImageURL: data.images[0].url,
+            playlistDescription: data.description,
+            playlistName: data.name,
+            dataType: data.type,
+            albumInfo: data
+         });
       });
    }
    render() {
       return (
-         <React.Fragment>
-            {this.state.tracks.map(track => (
-               <a href={track.preview_url} target="_blank" key={track.id}>
-                  {track.name}
-               </a>
-            ))}
-         </React.Fragment>
+         <Playlist
+            tracksTotal={this.state.tracksTotal}
+            playlistImageURL={this.state.playlistImageURL}
+            playlistDescription={this.state.playlistDescription}
+            playlistName={this.state.playlistName}
+            playlistOwner={this.state.playlistOwner}
+            tracks={this.state.tracks}
+            type={this.state.dataType}
+            albumInfo={this.state.albumInfo}
+         />
+         // <React.Fragment>
+         //    {this.state.tracks.map(track => (
+         //       <a href={track.preview_url} target="_blank" key={track.id}>
+         //          {track.name}
+         //       </a>
+         //    ))}
+         // </React.Fragment>
       );
    }
 }

@@ -10,7 +10,7 @@ const PlaylistWrapper = styled.section`
       props.type === "artist" ? "100px 1fr" : "1% 1fr"};
    margin: 0 auto;
    font-size: 0.8rem;
-   /* grid-template-columns: 1% 1fr; */
+   grid-template-columns: 1% 1fr;
    grid-gap: 1rem;
    transition: all 0.3s;
 
@@ -43,7 +43,6 @@ const PlaylistWrapper = styled.section`
 `;
 
 const AlbumImage = styled.img`
-   /* display: ${props => (props.type === "artist" ? "grid" : "none")}; */
    align-self: center;
    justify-self: right;
    grid-column: 1/2;
@@ -69,10 +68,6 @@ const TrackName = styled.span`
    font-size: 1rem;
    width: max-content;
 `;
-// const ExplicitContainer = styled.div`
-//    grid-row: 2/3;
-//    width: min-content;
-// `;
 
 const Explicit = styled.span`
    display: ${props => (props.explicit ? "grid" : "none")};
@@ -150,7 +145,7 @@ const Track = ({
          ? minutes + 1 + ":00"
          : minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
    }
-   console.log("albumImage: ", type, albumImage);
+   console.log(trackName, "DATA type in Track: ", type);
 
    return (
       <PlaylistWrapper type="artist">
@@ -159,14 +154,12 @@ const Track = ({
          ) : null}
          <TrackWraper>
             <TrackName>{trackName}</TrackName>
-            {/* <ExplicitContainer> */}
-            {/* </ExplicitContainer> */}
 
             <RowContainer>
                <Explicit explicit={explicit}>
                   {explicit ? "EXPLICIT" : null}
                </Explicit>
-               {type !== "artist" ? (
+               {type !== "artist" && type !== "album" ? (
                   <React.Fragment>
                      <Name href="#">{displayArtistName(artists)}</Name>
                      <Dot>&sdot;</Dot>

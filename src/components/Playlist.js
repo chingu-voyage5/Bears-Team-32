@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Card from "../components/Card";
 import Track from "../components/Track";
 import ButtonPrimary from "../components/ButtonPrimary";
+import moment from "moment";
 import { makeArtistArray } from "./style-utils";
 
 const PlaylistContainer = styled.section`
@@ -13,7 +14,8 @@ const PlaylistContainer = styled.section`
 const CardWrapper = styled.div`
    grid-column: 1/2;
    margin-top: 4rem;
-   justify-self: end;
+   margin-left: 5rem;
+   /* justify-self: end; */
 `;
 
 const TracksWrapper = styled.div`
@@ -33,29 +35,46 @@ const Playlist = ({
    playlistDescription,
    playlistName,
    playlistOwner,
-   tracks
+   tracks,
+   type,
+   albumInfo
 }) => {
+   console.log(type, "albumInfo: ", albumInfo);
+
    const tracksPlaylist = tracks.map(track => {
       let artistsArray = [];
-      if (track.track.artists.length > 1) {
-         track.track.artists.map(artist => {
-            artistsArray.push(artist.name);
-         });
-      } else {
-         artistsArray = [track.track.artists[0].name];
+      if (!type && type !== "album") {
+         if (track.track.artists.length > 1) {
+            track.track.artists.map(artist => {
+               artistsArray.push(artist.name);
+            });
+         } else {
+            artistsArray = [track.track.artists[0].name];
+         }
       }
+      console.log(type, "track naem: ", track.name);
 
       return (
          <Track
-            key={track.track.id}
-            artists={artistsArray}
-            trackName={track.track.name}
-            albumName={track.track.album.name}
-            trackDuration={track.track.duration_ms}
-            explicit={track.track.explicit}
+            type={type}
+            key={type && type === "album" ? track.id : track.track.id}
+            artists={type && type === "album" ? null : artistsArray}
+            trackName={type && type === "album" ? track.name : track.track.name}
+            albumName={type && type === "album" ? null : track.track.album.name}
+            trackDuration={
+               type && type === "album"
+                  ? track.duration_ms
+                  : track.track.duration_ms
+            }
+            explicit={
+               type && type === "album" ? track.explicit : track.track.explicit
+            }
          />
       );
    });
+
+   const albumReleaseDate = moment(albumInfo.release_date, "YYYY/MM/DD").year();
+
    return (
       <PlaylistContainer>
          <CardWrapper>
@@ -65,9 +84,16 @@ const Playlist = ({
                image={playlistImageURL}
                name={playlistName}
             />
-            <Paragraph>{playlistOwner}</Paragraph>
-            <Paragraph>{playlistDescription}</Paragraph>
-            <Paragraph>{tracksTotal} SONGS</Paragraph>
+            <Paragraph>
+               {type === "album" ? albumInfo.artists[0].name : playlistOwner}
+            </Paragraph>
+            <Paragraph>
+               {type === "album" ? null : playlistDescription}
+            </Paragraph>
+            <Paragraph>
+               {type === "album" ? `${albumReleaseDate} · ` : null}{" "}
+               {tracksTotal > 1 ? `${tracksTotal} SONGS` : `1 SONG`}
+            </Paragraph>
             <ButtonPrimary>Play</ButtonPrimary>
          </CardWrapper>
          <TracksWrapper>{tracksPlaylist}</TracksWrapper>
