@@ -73,8 +73,6 @@ const Playlist = ({
       );
    });
 
-   const albumReleaseDate = moment(albumInfo.release_date, "YYYY/MM/DD").year();
-
    return (
       <PlaylistContainer>
          <CardWrapper>
@@ -91,7 +89,9 @@ const Playlist = ({
                {type === "album" ? null : playlistDescription}
             </Paragraph>
             <Paragraph>
-               {type === "album" ? `${albumReleaseDate} · ` : null}{" "}
+               {type === "album"
+                  ? `${moment(albumInfo.release_date, "YYYY/MM/DD").year()} · `
+                  : null}{" "}
                {tracksTotal > 1 ? `${tracksTotal} SONGS` : `1 SONG`}
             </Paragraph>
             <ButtonPrimary>Play</ButtonPrimary>
