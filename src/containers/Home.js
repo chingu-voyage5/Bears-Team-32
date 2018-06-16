@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
-import Layout from '../components/Layout';
+import HomeResult from './HomeResult';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
 
+const apiBase = 'https://jffy-api.herokuapp.com/api/v1/spotify';
+// const apiBase = 'http://localhost:3001/api/v1/spotify';
+
 const Links = [
-  { name: 'featured', to: '/browse/featured' },
-  { name: 'podcasts', to: '/browse/podcasts' },
-  { name: 'genres & moods', to: '/browse/genres' },
-  { name: 'new releases', to: '/browse/newreleases' },
-  { name: 'discover', to: '/browse/discover' },
+  // { name: 'podcasts', to: '/browse/podcasts' },
+  { name: 'featured', to: '/browse/featured', api: `${apiBase}/featured` },
+  { name: 'genres & moods', to: '/browse/genres', api: `${apiBase}/categories` },
+  { name: 'new releases', to: '/browse/newreleases', api: `${apiBase}/new-releases` },
+  { name: 'discover', to: '/browse/discover', api: `${apiBase}/discover` },
 ];
 
 const bgColors = {
@@ -45,48 +48,52 @@ class Home extends Component {
     this.setState({ currentLink: selectedLink });
   };
 
+  linkProps = ({ to, name }) => {
+    const { currentLink } = this.state;
+    return {
+      key: to,
+      to,
+      onClick: () => this.clickHandler(name),
+      selected: currentLink.name === name,
+    };
+  };
+
+  getRoutes = ({ name, to, api }) => {
+    const layoutComp = <HomeResult name={name} api={api} />;
+    return name !== 'featured' ? <Route path={to} render={() => layoutComp} key={name} /> : null;
+  };
+
   render() {
     const { currentLink } = this.state;
     return (
-      <Wrapper bgColor={bgColors[currentLink.name]}>
-        <div>
-          {Links.map(link => (
-            <StyledLink
-              key={link.to}
-              to={link.to}
-              onClick={() => this.clickHandler(link.name)}
-              selected={currentLink.name === link.name}
-            >
-              {link.name}
-            </StyledLink>
-          ))}
-        </div>
-
-        <div>
+      <HomeWrapper>
+        <Wrapper bgColor={bgColors[currentLink.name]}>
+          {Links.map(link => <StyledLink {...this.linkProps(link)}>{link.name}</StyledLink>)}
           <Switch>
-            <Route path="/browse/podcasts" render={() => <Layout name={'podcasts'} />} />
-            <Route path="/browse/genres" render={() => <Layout name={'genres'} />} />
-            <Route path="/browse/newreleases" render={() => <Layout name={'newreleases'} />} />
-            <Route path="/browse/discover" render={() => <Layout name={'discover'} />} />
-            <Route render={() => <Layout name={'Featured'} />} />
+            {Links.map(link => this.getRoutes(link))}
+            <Route render={() => <HomeResult name={Links[0].name} api={Links[0].api} />} />
           </Switch>
-        </div>
-      </Wrapper>
+        </Wrapper>
+      </HomeWrapper>
     );
   }
 }
 
 export default withRouter(Home);
 
+const HomeWrapper = styled.div`
+  height: 100%;
+  overflow: auto;
+`;
+
 const Wrapper = styled.div`
   box-sizing: border-box;
   background-color: ${props => props.bgColor};
   position: relative;
-  height: 100%;
+  min-height: 100%;
   padding-top: 2rem;
   transition: background-color 500ms;
-  overflow: auto;
-  /* &::before {
+  &::before {
     content: '';
     display: block;
     position: absolute;
@@ -95,7 +102,7 @@ const Wrapper = styled.div`
     bottom: 0;
     left: 0;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
-  } */
+  }
 `;
 
 const StyledLink = styled(Link)`

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Card from '../components/Card';
 import { WrapperSection, HeadingPrimary, WrapperMain } from '../components/style-utils';
 
 class Layout extends Component {
@@ -8,33 +7,8 @@ class Layout extends Component {
       <div>
         <WrapperMain>
           <WrapperSection>
-            <HeadingPrimary>Recently Played</HeadingPrimary>
-            <Card />
-            <Card circle />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-          </WrapperSection>
-          <WrapperSection>
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            <HeadingPrimary>{this.props.header}</HeadingPrimary>
+            {this.props.children}
           </WrapperSection>
         </WrapperMain>
       </div>
