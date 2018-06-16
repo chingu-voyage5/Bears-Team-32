@@ -3,6 +3,8 @@ import Layout from '../Layout';
 import Card from '../Card';
 import axios from 'axios';
 import ArtistHeader from './ArtistHeader';
+import Track from '../Track';
+import styled from 'styled-components';
 
 const url = 'https://jffy-api.herokuapp.com/api/v1/spotify/?query';
 
@@ -57,9 +59,19 @@ class Artist extends Component {
       <div id={`artist-${artist.id}`}>
         <ArtistHeader artist={artist} />
         <div>
-          <Layout header="Popular">
-            {topTracks.map(track => <div key={track.id}>{track.name}</div>)}
-          </Layout>
+          <div>
+            <Popular>Popular</Popular>
+            {topTracks.map(track => (
+              <Track
+                type="artist"
+                key={track.id}
+                albumImage={track.album.images[0].url}
+                trackName={track.name}
+                trackDuration={track.duration_ms}
+                explicit={track.explicit}
+              />
+            ))}
+          </div>
           <Layout header="Albums">
             {albums.map(album => (
               <Card
@@ -89,3 +101,8 @@ class Artist extends Component {
 }
 
 export default Artist;
+
+const Popular = styled.h1`
+  font-size: 3rem;
+  font-weight: 600;
+`;

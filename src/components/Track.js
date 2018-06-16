@@ -129,6 +129,7 @@ const TrackDuration = styled.span`
 `;
 
 const Track = ({ type, albumImage, artists, trackName, albumName, trackDuration, explicit }) => {
+  console.log(albumImage);
   function millisToMinutesAndSeconds(millis) {
     const minutes = Math.floor(millis / 60000);
     const seconds = ((millis % 60000) / 1000).toFixed(0);
@@ -141,7 +142,7 @@ const Track = ({ type, albumImage, artists, trackName, albumName, trackDuration,
   return (
     <PlaylistWrapper type="artist">
       {type === 'artist' && albumImage ? (
-        <AlbumImage type="artist" url={albumImage} alt="Album Image" />
+        <AlbumImage type="artist" src={albumImage} alt="Album Image" />
       ) : null}
       <TrackWraper>
         <TrackName>{trackName}</TrackName>
