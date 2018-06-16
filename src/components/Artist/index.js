@@ -60,7 +60,7 @@ class Artist extends Component {
           <Layout header="Popular">
             {topTracks.map(track => <div key={track.id}>{track.name}</div>)}
           </Layout>
-          <Layout header="Ablums">
+          <Layout header="Albums">
             {albums.map(album => (
               <Card
                 key={album.id}
