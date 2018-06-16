@@ -5,6 +5,24 @@ import Layout from '../components/Layout';
 import Track from '../components/Track';
 
 class SearchResult extends Component {
+  getCardByType = (type, item) => {
+    if (item.images.length > 0) {
+      let card;
+      if (type === 'album') {
+        card = (
+          <Card type={type} image={item.images[0].url} name={item.name} artists={item.artists} />
+        );
+      } else if (type === 'artist') {
+        card = <Card circle="yes, please" name={item.name} image={item.images[0].url} />;
+      } else {
+        card = <Card image={item.images[0].url} />;
+      }
+      return card;
+    } else {
+      return item.name;
+    }
+  };
+
   getItems = () => {
     const { items, type } = this.props;
 
@@ -31,47 +49,12 @@ class SearchResult extends Component {
         );
       });
       return tracksPlaylist;
-    } else if (type === 'album') {
-      console.log('items', this.props);
-
-      return (
-        <Layout header={type}>
-          {items.map(item => (
-            <Link to={`/${type}/${item.id}`} key={item.id}>
-              {item.images.length > 0 ? (
-                <Card
-                  type={type}
-                  image={item.images[0].url}
-                  name={item.name}
-                  artists={item.artists}
-                />
-              ) : (
-                item.name
-              )}
-            </Link>
-          ))}
-        </Layout>
-      );
-    } else if (type === 'artist') {
-      return (
-        <Layout header={type}>
-          {items.map(item => (
-            <Link to={`/${type}/${item.id}`} key={item.id}>
-              {item.images.length > 0 ? (
-                <Card circle="yes, please" name={item.name} image={item.images[0].url} />
-              ) : (
-                item.name
-              )}
-            </Link>
-          ))}
-        </Layout>
-      );
     } else {
       return (
         <Layout header={type}>
           {items.map(item => (
             <Link to={`/${type}/${item.id}`} key={item.id}>
-              {item.images.length > 0 ? <Card image={item.images[0].url} /> : item.name}
+              {this.getCardByType(type, item)}
             </Link>
           ))}
         </Layout>
