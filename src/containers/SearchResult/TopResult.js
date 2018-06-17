@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SearchResult from '../containers/SearchResult';
+import SearchResult from '../../containers/SearchResult';
 class TopResult extends Component {
   render() {
     const { results } = this.props;

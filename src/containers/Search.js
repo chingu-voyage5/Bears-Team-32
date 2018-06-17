@@ -87,9 +87,7 @@ class Search extends Component {
   };
 
   searchHandler = data => {
-    // TODO : filter out data for top results
     const { albums, artists, playlists, tracks } = data;
-    console.log(data);
     data.results = {
       items: [
         { type: 'track', value: { items: tracks.items.slice(0, 5) } },

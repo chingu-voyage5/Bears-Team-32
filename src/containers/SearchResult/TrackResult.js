@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Track from './Track';
-class Tracks extends Component {
+import Track from '../../components/Track';
+class TrackResult extends Component {
   getArtists = track => {
     return track.artists.length > 1
       ? track.artists.map(artist => artist.name)
@@ -8,10 +8,10 @@ class Tracks extends Component {
   };
 
   render() {
-    const { tracks, type } = this.props;
+    const { results, type } = this.props;
     return (
       <div>
-        {tracks.map(track => (
+        {results.map(track => (
           <Track
             type={type}
             key={track.id}
@@ -27,4 +27,4 @@ class Tracks extends Component {
   }
 }
 
-export default Tracks;
+export default TrackResult;
