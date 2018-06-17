@@ -2,27 +2,22 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
-const SearchTypes = ['album', 'artist', 'playlist', 'track'];
-// const LocalApiServer = 'http://localhost:3001';
-const LocalApiServer = 'https://jffy-api.herokuapp.com';
-
+const searchTypes = ['album', 'artist', 'playlist', 'track'];
+const baseURL = 'https://jffy-api.herokuapp.com/api/v1/spotify/search';
 class SearchBar extends Component {
   timeoutID = null;
 
-  handleKeyUp = e => {
+  handleKeyUp = ({ target }) => {
     clearTimeout(this.timeoutID);
-    const input = e.target;
-    let searchData = {};
     this.timeoutID = setTimeout(() => {
-      let promises = SearchTypes.map(type => {
-        return axios.get(
-          `${LocalApiServer}/api/v1/spotify/search/?query=${input.value}&type=${type}`,
-        );
-      });
+      let promises = searchTypes.map(type =>
+        axios.get(`${baseURL}/?query=${target.value}&type=${type}`),
+      );
 
       Promise.all(promises)
         .then(responses => {
-          responses.forEach((response, index) => {
+          let searchData = {};
+          responses.forEach(response => {
             searchData = Object.assign(searchData, response.data);
           });
           this.props.searchHandler(searchData);
