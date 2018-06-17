@@ -1,5 +1,3 @@
-
-
 a, a:focus, a:hover {
     text-decoration: none;
 }
@@ -217,13 +215,29 @@ a:focus, a:hover {
 .player__right {
     width: 30%;
     min-width: 180px;
-    background-color: green; /* debug */
-}
-
-.now-playing { 
     display: flex;
     flex-direction: row;
+    justify-content: flex-end;
+}
+
+.player__right__inner {
+    width: 180px;
+}
+
+.extra-controls {
+    display: flex;
+    justify-content: flex-end;
     align-items: center;
+}
+
+.connect-device-picker {
+    position: relative;
+}
+
+.volume-bar {
+    align-items: center;
+    width: 136px;
+    display: flex;
 }
 
 .control-button {

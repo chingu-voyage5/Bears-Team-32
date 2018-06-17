@@ -37,7 +37,7 @@ class Player__left extends Component {
             </div>
           </div>
           <button className="control-button">
-            <FontAwesome name="plus fa-lg" />
+            <FontAwesome name="plus" />
           </button>
         </div>
       </div>
@@ -52,20 +52,20 @@ class Player__center extends Component {
         <div className="player-controls">
           <div className="player-controls__buttons">
             <button className="control-button">
-              <FontAwesome name="random fa-lg" />
+              <FontAwesome name="random" />
             </button>
             <button className="control-button">
-              <FontAwesome name="step-backward fa-lg" />
+              <FontAwesome name="step-backward" />
             </button>
             <button className="control-button control-button--circled">
               {/* <FontAwesome name="play fa-sm"/> */}
               <FontAwesome name="pause fa-sm"/>
             </button>
             <button className="control-button">
-              <FontAwesome name="step-forward fa-lg" />
+              <FontAwesome name="step-forward" />
             </button>
             <button className="control-button">
-              <FontAwesome name="repeat fa-lg" />
+              <FontAwesome name="repeat" />
             </button>
           </div>
           <div className="playback-bar">
@@ -88,15 +88,33 @@ class Player__right extends Component {
   render() {
     return (
       <div className="player__right">
-        <button className="control-button">
-          <FontAwesome name="list-ul fa-lg" />
-        </button>
-        <button className="control-button">
-          <FontAwesome name="mobile fa-lg" />
-        </button>
-        <button className="control-button">
-          <FontAwesome name="volume-down fa-lg" />
-        </button>
+        <div className="player__right__inner">
+          <div className="extra-controls">
+          <div className="GlueDropTarget">
+            <a className="extra-controls__queue-link" href="/queue">
+              <button className="control-button">
+                <FontAwesome name="list-ul fa-lg" />
+              </button>
+            </a>
+          </div>
+          <span className="connect-device-picker">
+            <button className="control-button">
+              <FontAwesome name="mobile fa-lg" />
+            </button>
+          </span>
+          <div className="volume-bar">
+            <button className="control-button">
+              <FontAwesome name="volume-down fa-lg" />
+            </button>
+            <div className="progress-bar">
+              <div className="middle-align progress-bar__bg">
+                <div className="progress-bar__fg"  style={{width: '75.3643%'}}></div>
+                <div className="middle-align progress-bar__slider"  style={{width: '75.3643%'}}></div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
       </div>
     );
   }
