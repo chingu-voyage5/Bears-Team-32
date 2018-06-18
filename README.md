@@ -2,9 +2,9 @@
 
 ## Team Member
 
-- Fabien
-- Liviu
-- jffy (Project Manager)
+- [Fabien](https://github.com/X140hu4)
+- [Liviu](https://github.com/liviuschera)
+- [Jack- Project Manager](https://github.com/fanyeh)
 
 ## Folder Structure
 
@@ -26,7 +26,7 @@ exmple :
 https://jffy-api.herokuapp.com/api/v1/spotify/?query=https://api.spotify.com/v1/tracks/1CkvWZme3pRgbzaxZnTl5X
 ```
 
-#### Presset endpoints
+#### Pre-set endpoints
 
 | End point                                           | Purpose                   | Remark                                              |
 | --------------------------------------------------- | ------------------------- | --------------------------------------------------- |
