@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import TrackResult from './TrackResult';
 import TopResult from './TopResult';
 import OtherResult from './OtherResult';

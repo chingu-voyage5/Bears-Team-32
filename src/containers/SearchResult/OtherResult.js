@@ -50,7 +50,7 @@ class OtherResult extends Component {
   render() {
     const { type, results } = this.props;
     return (
-      <Layout header={type}>
+      <Layout header={type} bgColor="black">
         {results.map(result => (
           <Link
             to={`/${type}/${result.id}`}
