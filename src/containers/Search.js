@@ -4,14 +4,14 @@ import { withRouter } from 'react-router';
 import styled from 'styled-components';
 import SearchBar from '../components/SearchBar';
 import SearchResult from './SearchResult';
-
+import RecentSearch from './RecentSearch';
 const Links = [
-  { name: 'recent searches', to: '/search/recent' },
-  { name: 'top results', to: '/search/results' },
-  { name: 'artists', to: '/search/artists' },
-  { name: 'tracks', to: '/search/tracks' },
-  { name: 'albums', to: '/search/albums' },
-  { name: 'playlists', to: '/search/playlists' },
+  { type: 'recent', name: 'recent searches', to: '/search/recent' },
+  { type: 'results', name: 'top results', to: '/search/results' },
+  { type: 'artists', name: 'artists', to: '/search/artists' },
+  { type: 'tracks', name: 'tracks', to: '/search/tracks' },
+  { type: 'albums', name: 'albums', to: '/search/albums' },
+  { type: 'playlists', name: 'playlists', to: '/search/playlists' },
 ];
 
 const Wrapper = styled.div`
@@ -96,21 +96,27 @@ class Search extends Component {
         { type: 'playlist', value: { items: playlists.items.slice(0, 12) } },
       ],
     };
-    this.setState({ searchData: data });
+    this.setState(
+      () => ({ searchData: data }),
+      () => {
+        this.props.history.push('/search/results');
+      },
+    );
   };
 
   hasSearchData = () => {
     return Object.keys(this.state.searchData).length !== 0;
   };
 
-  routeProps = type => {
+  routeProps = ({ type }) => {
+    const { searchData } = this.state;
     return {
       path: `/search/${type}`,
       render: () => {
-        return !this.state.searchData[type] ? (
+        return !searchData[type] ? (
           <Redirect to="/search" />
         ) : (
-          <SearchResult data={this.state.searchData[type]} type={type.slice(0, -1)} />
+          <SearchResult data={searchData[type]} type={type.slice(0, -1)} />
         );
       },
     };
@@ -131,18 +137,17 @@ class Search extends Component {
       <Wrapper>
         <SearchBar searchHandler={this.searchHandler} />
         <SearchContent>
-          {this.hasSearchData() && (
-            <Menu>
-              {Links.map(link => <StyledLink {...this.linkProps(link)}>{link.name}</StyledLink>)}
-            </Menu>
-          )}
+          <Menu>
+            <StyledLink {...this.linkProps(Links[0])}>{Links[0].name}</StyledLink>
+
+            {this.hasSearchData() &&
+              Links.slice(1).map(link => (
+                <StyledLink {...this.linkProps(link)}>{link.name}</StyledLink>
+              ))}
+          </Menu>
           <Switch>
-            <Route {...this.routeProps('results')} />
-            <Route {...this.routeProps('artists')} />
-            <Route {...this.routeProps('tracks')} />
-            <Route {...this.routeProps('albums')} />
-            <Route {...this.routeProps('playlists')} />
-            <Route render={() => <div />} />
+            {Links.slice(1).map(link => <Route {...this.routeProps(link)} key={link.type} />)}
+            <Route render={() => <RecentSearch />} />
           </Switch>
         </SearchContent>
       </Wrapper>
