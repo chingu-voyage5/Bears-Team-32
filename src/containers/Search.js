@@ -89,12 +89,12 @@ class Search extends Component {
   searchHandler = data => {
     const { albums, artists, playlists, tracks } = data;
     data.results = {
-      items: [
-        { type: 'track', value: { items: tracks.items.slice(0, 5) } },
-        { type: 'artist', value: { items: artists.items.slice(0, 12) } },
-        { type: 'album', value: { items: albums.items.slice(0, 12) } },
-        { type: 'playlist', value: { items: playlists.items.slice(0, 12) } },
-      ],
+      items: {
+        track: tracks.items.slice(0, 5),
+        artist: artists.items.slice(0, 12),
+        album: albums.items.slice(0, 12),
+        playlist: playlists.items.slice(0, 12),
+      },
     };
     this.setState(
       () => ({ searchData: data }),

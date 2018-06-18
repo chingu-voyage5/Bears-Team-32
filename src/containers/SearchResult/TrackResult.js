@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Track from '../../components/Track';
+import styled from 'styled-components';
 class TrackResult extends Component {
   getArtists = track => {
     return track.artists.length > 1
@@ -10,7 +11,7 @@ class TrackResult extends Component {
   render() {
     const { results, type } = this.props;
     return (
-      <div>
+      <Wrapper>
         {results.map(track => (
           <Track
             type={type}
@@ -22,9 +23,14 @@ class TrackResult extends Component {
             explicit={track.explicit}
           />
         ))}
-      </div>
+      </Wrapper>
     );
   }
 }
 
 export default TrackResult;
+
+const Wrapper = styled.div`
+  /* display: flex; */
+  width: 100%;
+`;
