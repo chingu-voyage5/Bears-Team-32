@@ -16,14 +16,14 @@ src
 
 ## API Usage..
 
-### Base URL : https://jffy-api.herokuapp.com
+### Base URL : https://jffy-api.herokuapp.comapi/v1/spotify/
 
 ```
 Use together with Spotify end points
-https://jffy-api.herokuapp.com/?query={:spotify api}
+https://jffy-api.herokuapp.com/api/v1/spotify/?query={:spotify api}
 
 exmple :
-https://jffy-api.herokuapp.com/?query=https://api.spotify.com/v1/tracks/1CkvWZme3pRgbzaxZnTl5X
+https://jffy-api.herokuapp.com/api/v1/spotify/?query=https://api.spotify.com/v1/tracks/1CkvWZme3pRgbzaxZnTl5X
 ```
 
 #### Presset endpoints
