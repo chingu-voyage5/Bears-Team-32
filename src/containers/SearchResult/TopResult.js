@@ -34,6 +34,5 @@ const Wrapper = styled.div`
 `;
 
 const CardWrapper = styled.div`
-  /* width: 30%; */
   flex-shrink: 0;
 `;

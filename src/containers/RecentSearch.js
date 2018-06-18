@@ -8,14 +8,14 @@ class RecentSearch extends Component {
 
   render() {
     return (
-      <div>
+      <Wrapper>
         {this.state.results.map(result => (
-          <Wrapper key={result.id}>
+          <SearchItem key={result.id}>
             <StyledLink to={`/${result.type}/${result.id}`}>{result.name}</StyledLink>
             <StyledSpan>{result.type}</StyledSpan>
-          </Wrapper>
+          </SearchItem>
         ))}
-      </div>
+      </Wrapper>
     );
   }
 }
@@ -23,13 +23,18 @@ class RecentSearch extends Component {
 export default RecentSearch;
 
 const Wrapper = styled.div`
+  padding: 0 8rem;
+  margin-top: 2rem;
+`;
+
+const SearchItem = styled.div`
   text-align: left;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 `;
 
 const StyledLink = styled(Link)`
   font-weight: 600;
-  font-size: 28px;
+  font-size: 2.5rem;
   text-decoration: none;
   color: hsla(0, 0%, 100%, 0.6);
   display: block;
