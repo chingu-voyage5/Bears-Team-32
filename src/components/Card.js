@@ -6,8 +6,8 @@ import { displayArtistName } from './style-utils';
 
 const Figure = styled.figure`
    display: inline-block;
-   width: ${props => (props.big ? "19rem" : "13rem")};
-   height: ${props => (props.big ? "19rem" : "13rem")};
+   width: ${props => (props.big ? '19rem' : '13rem')};
+   height: ${props => (props.big ? '19rem' : '13rem')};
    margin-bottom: 2.5rem;
    margin-bottom: ${props => (props.big ? '4rem' : '2.5')};
    position: relative;
@@ -71,29 +71,29 @@ const Figure = styled.figure`
 const Card = props => {
   let artistsArray = [];
 
-   if (props.artists) {
-      const { artists } = props;
-      if (props.artists.length > 1) {
-         props.artists.map(artist => {
-            artistsArray.push(artist.name);
-         });
-      } else {
-         artistsArray = [props.artists[0].name];
-      }
-   }
+  if (props.artists) {
+    const { artists } = props;
+    if (props.artists.length > 1) {
+      props.artists.map(artist => {
+        artistsArray.push(artist.name);
+      });
+    } else {
+      artistsArray = [props.artists[0].name];
+    }
+  }
 
-   return (
-      <Figure noshadow={props.noshadow} circle={props.circle} big={props.big}>
-         <img src={props.image} circle={props.circle} alt="Random " />
-         <figcaption big={props.big}>{props.name}</figcaption>
-         {props.type === "album" && props.artists ? (
-            <p type={props.type}>{displayArtistName(artistsArray)}</p>
-         ) : null}
-         <button>
-            <FontAwesome name="play-circle" />
-         </button>
-      </Figure>
-   );
+  return (
+    <Figure noshadow={props.noshadow} circle={props.circle} big={props.big}>
+      <img src={props.image} circle={props.circle} alt="Random " />
+      <figcaption big={props.big}>{props.name}</figcaption>
+      {props.type === 'album' && props.artists ? (
+        <p type={props.type}>{displayArtistName(artistsArray)}</p>
+      ) : null}
+      <button>
+        <FontAwesome name="play-circle" />
+      </button>
+    </Figure>
+  );
 };
 
 export default Card;

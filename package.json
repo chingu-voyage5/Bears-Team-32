@@ -27,5 +27,6 @@
   },
   "devDependencies": {
     "styled-components": "^3.3.0"
-  }
+  },
+  "license": "MIT"
 }

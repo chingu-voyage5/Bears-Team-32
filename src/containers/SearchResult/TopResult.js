@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import SearchResult from '../../containers/SearchResult';
 import TrackResult from './TrackResult';
 import OtherResult from './OtherResult';
 import Card from '../../components/Card';
