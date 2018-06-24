@@ -1,9 +1,31 @@
 import React, { Component } from 'react';
-import './Player.css';
+import axios from 'axios';
 import FontAwesome from 'react-fontawesome';
 import 'font-awesome/css/font-awesome.css';
+import './Player.css';
 
 class Player extends Component {
+  constructor() {
+    super();
+    this.state = {
+      album: {},
+      artists: {}
+    }
+  }
+
+  componentDidMount() {
+    // API Link to Shakira's El Dorado album
+    const apiLink = "https://jffy-api.herokuapp.com/api/v1/spotify/?query=https://api.spotify.com/v1/tracks/1D8bmUIhLHEO4KMS2SHwUx";
+    axios.get(apiLink).then(res => {
+      // console.log(res); // shows complete response
+      this.setState({
+        album: res.data.album,
+        artists: res.data.artists
+      });
+      console.log(this.state);
+    });
+  }
+
   render() {
     return (
       <footer className="playerBar-container">
@@ -16,7 +38,6 @@ class Player extends Component {
     );
   }
 }
-
 
 class Player__left extends Component {
   render () {
