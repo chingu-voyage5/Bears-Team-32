@@ -109,7 +109,7 @@ class Player__right extends Component {
             <div className="progress-bar">
               <div className="middle-align progress-bar__bg">
                 <div className="progress-bar__fg"  style={{width: '75.3643%'}}></div>
-                <div className="middle-align progress-bar__slider"  style={{width: '75.3643%'}}></div>
+                <div className="middle-align progress-bar__slider"  style={{left: '75.3643%'}}></div>
               </div>
             </div>
           </div>

@@ -202,10 +202,25 @@ a:focus, a:hover {
     width: 12px;
     height: 12px;
     margin-left: -6px;
-    margin-top: -6px;
+    margin-top: -8px;
     z-index: 100;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .5);
     transform: scale(0);
+}
+
+/* Hover on progress-bar */
+.progress-bar:hover .progress-bar__slider {
+    transition-property: transform;
+    transition-duration: .1s;
+    transition-timing-function: cubic-bezier(.3,0,0,1);
+    transform: scale(1);
+}
+
+.progress-bar:hover .progress-bar__fg {
+    transition-property: transform;
+    transition-duration: .1s;
+    transition-timing-function: cubic-bezier(.3,0,0,1);
+    background-color: #1db954;
 }
 
 /* ============================== */
