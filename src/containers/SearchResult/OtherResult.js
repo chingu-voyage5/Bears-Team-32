@@ -48,9 +48,9 @@ class OtherResult extends Component {
   };
 
   render() {
-    const { type, results } = this.props;
+    const { type, results, bgColor } = this.props;
     return (
-      <Layout header={type} bgColor="black">
+      <Layout header={type} bgColor={bgColor || 'black'}>
         {results.map(result => (
           <Link
             to={`/${type}/${result.id}`}

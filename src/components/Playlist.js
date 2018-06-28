@@ -4,8 +4,7 @@ import Card from '../components/Card';
 import Track from '../components/Track';
 import ButtonPrimary from '../components/ButtonPrimary';
 import moment from 'moment';
-import { makeArtistArray } from './style-utils';
-
+import Storage from '../Storage';
 const PlaylistContainer = styled.section`
   display: grid;
   grid-template-columns: 30% 1fr;
@@ -38,6 +37,7 @@ const Playlist = ({
   tracks,
   type,
   albumInfo,
+  data,
 }) => {
   console.log(type, 'albumInfo: ', albumInfo);
 
@@ -78,6 +78,15 @@ const Playlist = ({
           {tracksTotal > 1 ? `${tracksTotal} SONGS` : `1 SONG`}
         </Paragraph>
         <ButtonPrimary>Play</ButtonPrimary>
+        <div
+          onClick={() => {
+            const items = Storage.getItems(type);
+            items.push(data);
+            Storage.setItems(type, items);
+          }}
+        >
+          Save to your library
+        </div>
       </CardWrapper>
       <TracksWrapper>{tracksPlaylist}</TracksWrapper>
     </PlaylistContainer>

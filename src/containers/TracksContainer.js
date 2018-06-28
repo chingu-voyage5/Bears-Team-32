@@ -34,12 +34,14 @@ class AlbumTracks extends Component {
         playlistName: data.name,
         dataType: data.type,
         albumInfo: data,
+        data,
       });
     });
   }
   render() {
     return (
       <Playlist
+        id={this.state.id}
         tracksTotal={this.state.tracksTotal}
         playlistImageURL={this.state.playlistImageURL}
         playlistDescription={this.state.playlistDescription}
@@ -48,6 +50,7 @@ class AlbumTracks extends Component {
         tracks={this.state.tracks}
         type={this.state.dataType}
         albumInfo={this.state.albumInfo}
+        data={this.state.data}
       />
     );
   }
@@ -78,6 +81,7 @@ class PlaylistTracks extends Component {
         playlistName: data.name,
         playlistOwner: data.owner.display_name,
         dataType: data.type,
+        data,
       });
     });
   }
@@ -85,6 +89,7 @@ class PlaylistTracks extends Component {
   render() {
     return (
       <Playlist
+        data={this.state.data}
         tracksTotal={this.state.tracksTotal}
         playlistImageURL={this.state.playlistImageURL}
         playlistDescription={this.state.playlistDescription}
