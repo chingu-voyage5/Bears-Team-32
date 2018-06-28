@@ -47,11 +47,13 @@ const Playlist = ({ data }) => {
       <Track
         type={type}
         key={track.id}
+        id={track.id}
         artists={type === 'album' ? null : artistsArray}
         trackName={track.name}
         albumName={type === 'album' ? null : track.album.name}
         trackDuration={track.duration_ms}
         explicit={track.explicit}
+        data={track}
       />
     );
   });

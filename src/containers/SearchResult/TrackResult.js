@@ -16,6 +16,7 @@ class TrackResult extends Component {
           <Track
             type={type}
             key={track.id}
+            id={track.id}
             artists={this.getArtists(track)}
             trackName={track.name}
             albumName={track.album.name}

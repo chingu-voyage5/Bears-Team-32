@@ -3,6 +3,7 @@ import { Route, Switch, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import CollectionEmpty from './CollectionEmpty';
 import OtherResult from './SearchResult/OtherResult';
+import TrackResult from './SearchResult/TrackResult';
 import Storage from '../Storage';
 const Links = [
   { type: 'playlist', name: 'playlists', to: '/collection/playlists' },
@@ -34,7 +35,11 @@ class Collection extends Component {
     const items = Storage.getItems(type);
     const layoutComp =
       items.length > 0 ? (
-        <OtherResult type={type} results={items} bgColor="transparent" />
+        type === 'track' ? (
+          <TrackResult type={type} results={items} />
+        ) : (
+          <OtherResult type={type} results={items} bgColor="transparent" />
+        )
       ) : (
         <CollectionEmpty />
       );

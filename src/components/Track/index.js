@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
-import { displayArtistName } from './style-utils';
+import { displayArtistName } from '../style-utils';
 import moment from 'moment';
-
+import ContextMenu from './ContextMenu';
+import Storage from '../../Storage';
 const PlaylistWrapper = styled.section`
   position: relative;
   display: grid;
@@ -129,34 +130,78 @@ const TrackDuration = styled.span`
   font-size: 1rem;
 `;
 
-const Track = ({ type, albumImage, artists, trackName, albumName, trackDuration, explicit }) => {
-  console.log(trackName, 'DATA type in Track: ', type);
+class Track extends Component {
+  state = { toggleMenu: false, menuPos: {} };
+  trackRef = React.createRef();
+  componentDidMount() {
+    window.addEventListener('click', this.closeMenu);
+    window.addEventListener('contextmenu', this.closeMenu);
+  }
 
-  return (
-    <PlaylistWrapper type="artist">
-      {type === 'artist' && albumImage ? (
-        <AlbumImage type="artist" src={albumImage} alt="Album Image" />
-      ) : null}
-      <TrackWraper>
-        <TrackName>{trackName}</TrackName>
+  closeMenu = e => {
+    if (e.type === 'contextmenu') {
+      e.target.id !== this.trackRef.current.id && this.setState({ toggleMenu: false });
+    } else {
+      this.setState({ toggleMenu: false });
+    }
+  };
+  openMenu = e => {
+    const { clientX, clientY, target } = e;
+    const rect = target.getBoundingClientRect();
+    const menuPos = {
+      left: clientX - rect.left,
+      top: clientY - rect.top,
+    };
+    this.setState(({ toggleMenu }) => ({ toggleMenu: !toggleMenu, menuPos }));
+    e.preventDefault();
+  };
 
-        <RowContainer>
-          <Explicit explicit={explicit}>{explicit ? 'EXPLICIT' : null}</Explicit>
-          {type !== 'artist' && type !== 'album' ? (
-            <React.Fragment>
-              <Name href="#">{displayArtistName(artists)}</Name>
-              <Dot>&sdot;</Dot>
-              <Name href="#">{albumName}</Name>
-            </React.Fragment>
-          ) : null}
+  addToLibrary = () => {
+    //TODO
+    let items = Storage.getItems('track');
+    items.push(this.props.data);
+    Storage.setItems('track', items);
+  };
 
-          <MenuEllipsis href="#">&hellip;</MenuEllipsis>
+  render() {
+    const {
+      type,
+      albumImage,
+      artists,
+      trackName,
+      albumName,
+      trackDuration,
+      explicit,
+      id,
+    } = this.props;
+    const { toggleMenu, menuPos } = this.state;
+    return (
+      <PlaylistWrapper type="artist">
+        {type === 'artist' && albumImage ? (
+          <AlbumImage type="artist" src={albumImage} alt="Album Image" />
+        ) : null}
+        <TrackWraper onContextMenu={this.openMenu} id={id} innerRef={this.trackRef}>
+          <TrackName>{trackName}</TrackName>
 
-          <TrackDuration>{moment(trackDuration).format('m:ss')}</TrackDuration>
-        </RowContainer>
-      </TrackWraper>
-    </PlaylistWrapper>
-  );
-};
+          <RowContainer>
+            <Explicit explicit={explicit}>{explicit ? 'EXPLICIT' : null}</Explicit>
+            {type !== 'artist' && type !== 'album' ? (
+              <React.Fragment>
+                <Name href="#">{displayArtistName(artists)}</Name>
+                <Dot>&sdot;</Dot>
+                <Name href="#">{albumName}</Name>
+              </React.Fragment>
+            ) : null}
+
+            <MenuEllipsis href="#">&hellip;</MenuEllipsis>
+
+            <TrackDuration>{moment(trackDuration).format('m:ss')}</TrackDuration>
+          </RowContainer>
+          {toggleMenu && <ContextMenu pos={menuPos} addToLibrary={this.addToLibrary} />}
+        </TrackWraper>
+      </PlaylistWrapper>
+    );
+  }
+}
 
 export default Track;

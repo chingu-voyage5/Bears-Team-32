@@ -13,7 +13,7 @@ const keys = {
   playlist: `${keyRoot}_playlist`,
   album: `${keyRoot}_album`,
   artist: `${keyRoot}_artist`,
-  song: `${keyRoot}_song`,
+  track: `${keyRoot}_track`,
 };
 
 export default {
