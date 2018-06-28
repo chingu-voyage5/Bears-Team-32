@@ -31,6 +31,5 @@ class TrackResult extends Component {
 export default TrackResult;
 
 const Wrapper = styled.div`
-  /* display: flex; */
   width: 100%;
 `;

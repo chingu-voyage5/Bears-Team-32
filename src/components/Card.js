@@ -65,30 +65,19 @@ const Figure = styled.figure`
       font-size: .8rem;
       text-align: center;
    }
-
 `;
 
-const Card = props => {
+const Card = ({ noshadow, circle, big, artists, image, name, type }) => {
   let artistsArray = [];
-
-  if (props.artists) {
-    const { artists } = props;
-    if (props.artists.length > 1) {
-      props.artists.map(artist => {
-        artistsArray.push(artist.name);
-      });
-    } else {
-      artistsArray = [props.artists[0].name];
-    }
+  if (artists) {
+    artistsArray = artists.length > 1 ? artists.map(artist => artist.name) : [artists[0].name];
   }
 
   return (
-    <Figure noshadow={props.noshadow} circle={props.circle} big={props.big}>
-      <img src={props.image} circle={props.circle} alt="Random " />
-      <figcaption big={props.big}>{props.name}</figcaption>
-      {props.type === 'album' && props.artists ? (
-        <p type={props.type}>{displayArtistName(artistsArray)}</p>
-      ) : null}
+    <Figure noshadow={noshadow} circle={circle} big={big}>
+      <img src={image} circle={circle} alt="Random " />
+      <figcaption big={big}>{name}</figcaption>
+      {type === 'album' && artists ? <p type={type}>{displayArtistName(artistsArray)}</p> : null}
       <button>
         <FontAwesome name="play-circle" />
       </button>

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { displayArtistName } from './style-utils';
+import moment from 'moment';
 
 const PlaylistWrapper = styled.section`
   position: relative;
@@ -129,14 +130,6 @@ const TrackDuration = styled.span`
 `;
 
 const Track = ({ type, albumImage, artists, trackName, albumName, trackDuration, explicit }) => {
-  console.log(albumImage);
-  function millisToMinutesAndSeconds(millis) {
-    const minutes = Math.floor(millis / 60000);
-    const seconds = ((millis % 60000) / 1000).toFixed(0);
-    return seconds === 60
-      ? minutes + 1 + ':00'
-      : minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
-  }
   console.log(trackName, 'DATA type in Track: ', type);
 
   return (
@@ -159,7 +152,7 @@ const Track = ({ type, albumImage, artists, trackName, albumName, trackDuration,
 
           <MenuEllipsis href="#">&hellip;</MenuEllipsis>
 
-          <TrackDuration>{millisToMinutesAndSeconds(trackDuration)}</TrackDuration>
+          <TrackDuration>{moment(trackDuration).format('m:ss')}</TrackDuration>
         </RowContainer>
       </TrackWraper>
     </PlaylistWrapper>
