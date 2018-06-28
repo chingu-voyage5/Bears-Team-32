@@ -80,9 +80,9 @@ const Playlist = ({
         <ButtonPrimary>Play</ButtonPrimary>
         <div
           onClick={() => {
-            const items = Storage.getItems(type);
+            const items = Storage.getItems(data.type);
             items.push(data);
-            Storage.setItems(type, items);
+            Storage.setItems(data.type, items);
           }}
         >
           Save to your library
