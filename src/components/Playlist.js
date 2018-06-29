@@ -4,8 +4,7 @@ import Card from '../components/Card';
 import Track from '../components/Track';
 import ButtonPrimary from '../components/ButtonPrimary';
 import moment from 'moment';
-import { makeArtistArray } from './style-utils';
-
+import Storage from '../Storage';
 const PlaylistContainer = styled.section`
   display: grid;
   grid-template-columns: 30% 1fr;
@@ -15,7 +14,6 @@ const CardWrapper = styled.div`
   grid-column: 1/2;
   margin-top: 4rem;
   margin-left: 5rem;
-  /* justify-self: end; */
 `;
 
 const TracksWrapper = styled.div`
@@ -29,40 +27,33 @@ const Paragraph = styled.p`
   font-size: 0.8rem;
 `;
 
-const Playlist = ({
-  tracksTotal,
-  playlistImageURL,
-  playlistDescription,
-  playlistName,
-  playlistOwner,
-  tracks,
-  type,
-  albumInfo,
-}) => {
-  console.log(type, 'albumInfo: ', albumInfo);
+const Playlist = ({ data }) => {
+  if (!data) {
+    return null;
+  }
+  const { tracks, images, description, name, owner, type } = data;
 
-  const tracksPlaylist = tracks.map(track => {
+  const tracksPlaylist = tracks.items.map(track => {
     let artistsArray = [];
-    if (!type && type !== 'album') {
-      if (track.track.artists.length > 1) {
-        track.track.artists.map(artist => {
-          artistsArray.push(artist.name);
-        });
-      } else {
-        artistsArray = [track.track.artists[0].name];
-      }
+    if (data.type !== 'album') {
+      track = track.track;
+      artistsArray =
+        track.artists.length > 1
+          ? track.artists.map(artist => artist.name)
+          : [track.artists[0].name];
     }
-    console.log(type, 'track naem: ', track.name);
 
     return (
       <Track
         type={type}
-        key={type && type === 'album' ? track.id : track.track.id}
-        artists={type && type === 'album' ? null : artistsArray}
-        trackName={type && type === 'album' ? track.name : track.track.name}
-        albumName={type && type === 'album' ? null : track.track.album.name}
-        trackDuration={type && type === 'album' ? track.duration_ms : track.track.duration_ms}
-        explicit={type && type === 'album' ? track.explicit : track.track.explicit}
+        key={track.id}
+        id={track.id}
+        artists={type === 'album' ? null : artistsArray}
+        trackName={track.name}
+        albumName={type === 'album' ? null : track.album.name}
+        trackDuration={track.duration_ms}
+        explicit={track.explicit}
+        data={track}
       />
     );
   });
@@ -70,14 +61,23 @@ const Playlist = ({
   return (
     <PlaylistContainer>
       <CardWrapper>
-        <Card noshadow="true" big="true" image={playlistImageURL} name={playlistName} />
-        <Paragraph>{type === 'album' ? albumInfo.artists[0].name : playlistOwner}</Paragraph>
-        <Paragraph>{type === 'album' ? null : playlistDescription}</Paragraph>
+        <Card noshadow="true" big="true" image={images[0].url} name={name} />
+        <Paragraph>{type === 'album' ? data.artists[0].name : owner.display_name}</Paragraph>
+        <Paragraph>{type === 'album' ? null : description}</Paragraph>
         <Paragraph>
-          {type === 'album' ? `${moment(albumInfo.release_date, 'YYYY/MM/DD').year()} · ` : null}{' '}
-          {tracksTotal > 1 ? `${tracksTotal} SONGS` : `1 SONG`}
+          {type === 'album' ? `${moment(data.release_date, 'YYYY/MM/DD').year()} · ` : null}
+          {tracks.total > 1 ? `${tracks.total} SONGS` : `1 SONG`}
         </Paragraph>
         <ButtonPrimary>Play</ButtonPrimary>
+        <div
+          onClick={() => {
+            const items = Storage.getItems(type);
+            items.push(data);
+            Storage.setItems(type, items);
+          }}
+        >
+          Save to your library
+        </div>
       </CardWrapper>
       <TracksWrapper>{tracksPlaylist}</TracksWrapper>
     </PlaylistContainer>

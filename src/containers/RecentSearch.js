@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import Storage from '../Storage';
 class RecentSearch extends Component {
   state = {
-    results: JSON.parse(localStorage.getItem('bears-team-32')) || [],
+    results: Storage.getItems('recent'),
   };
 
   render() {

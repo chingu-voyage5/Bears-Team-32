@@ -16,6 +16,7 @@ class TrackResult extends Component {
           <Track
             type={type}
             key={track.id}
+            id={track.id}
             artists={this.getArtists(track)}
             trackName={track.name}
             albumName={track.album.name}
@@ -31,6 +32,5 @@ class TrackResult extends Component {
 export default TrackResult;
 
 const Wrapper = styled.div`
-  /* display: flex; */
   width: 100%;
 `;

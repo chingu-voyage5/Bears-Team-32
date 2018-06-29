@@ -6,7 +6,6 @@ import styled from 'styled-components';
 class TopResult extends Component {
   render() {
     const { results } = this.props;
-    console.log(results.track);
     const artist = results.artist[0];
     return (
       <div>
