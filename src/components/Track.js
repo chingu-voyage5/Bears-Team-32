@@ -1,90 +1,91 @@
-import React from 'react';
-import styled from 'styled-components';
-import { displayArtistName } from './style-utils';
+import React from "react";
+import styled from "styled-components";
+import { displayArtistName } from "./style-utils";
 
 const PlaylistWrapper = styled.section`
-  position: relative;
-  display: grid;
-  width: ${props => (props.type === 'artist' ? '70%' : '90%')};
-  grid-template-columns: ${props => (props.type === 'artist' ? '100px 1fr' : '1% 1fr')};
-  margin: 0 auto;
-  font-size: 0.8rem;
-  grid-template-columns: 1% 1fr;
-  grid-gap: 1rem;
-  transition: all 0.3s;
+   position: relative;
+   display: grid;
+   width: ${props => (props.type === "artist" ? "70%" : "90%")};
+   grid-template-columns: ${props =>
+      props.type === "artist" ? "100px 1fr" : "1% 1fr"};
+   margin: 0 auto;
+   font-size: 0.8rem;
+   grid-template-columns: 1% 1fr;
+   grid-gap: 1rem;
+   transition: all 0.3s;
 
-  &:hover {
-    background: rgba(0, 0, 0, 0.1);
-  }
+   &:hover {
+      background: rgba(0, 0, 0, 0.1);
+   }
 
-  span:first-child::before {
-    position: absolute;
-    left: ${props => (props.type === 'artist' ? '-6rem' : '-2rem')};
-    top: ${props => (props.type === 'artist' ? '1.6rem' : '1 rem')};
-    font-family: FontAwesome;
-    content: '\f001';
-    color: rgba(255, 255, 255, 0.6);
-    /* transform: scale(1.2); */
-  }
+   span:first-child::before {
+      position: absolute;
+      left: ${props => (props.type === "artist" ? "-6rem" : "-2rem")};
+      top: ${props => (props.type === "artist" ? "1.6rem" : "1 rem")};
+      font-family: FontAwesome;
+      content: "\f001";
+      color: rgba(255, 255, 255, 0.6);
+      /* transform: scale(1.2); */
+   }
 
-  &:hover span:first-child::before {
-    position: absolute;
-    left: ${props => (props.type === 'artist' ? '-6rem' : '-2rem')};
-    top: ${props => (props.type === 'artist' ? '1.6rem' : '1 rem')};
-    font-family: FontAwesome;
-    content: '\f04b';
-    color: var(--color-white);
-    /* transform: scale(1.2); */
-  }
-  &:hover a {
-    display: grid;
-  }
+   &:hover span:first-child::before {
+      position: absolute;
+      left: ${props => (props.type === "artist" ? "-6rem" : "-2rem")};
+      top: ${props => (props.type === "artist" ? "1.6rem" : "1 rem")};
+      font-family: FontAwesome;
+      content: "\f04b";
+      color: var(--color-white);
+      /* transform: scale(1.2); */
+   }
+   &:hover a {
+      display: grid;
+   }
 `;
 
 const AlbumImage = styled.img`
-  align-self: center;
-  justify-self: right;
-  grid-column: 1/2;
-  width: 50px;
-  height: 50px;
-  background-color: rgba(111, 111, 255, 0.1);
+   align-self: center;
+   justify-self: right;
+   grid-column: 1/2;
+   width: 50px;
+   height: 50px;
+   background-color: rgba(111, 111, 255, 0.1);
 `;
 
 const TrackWraper = styled.section`
-  position: relative;
-  display: inline-grid;
-  grid-column: 2/3;
-  justify-content: start;
-  grid-template-columns: repeat(auto-fill, minmax(min-content, max-content));
-  /* grid-template-rows: 100% 1fr; */
-  padding: 1rem 0;
-  grid-gap: 0.5rem;
+   position: relative;
+   display: inline-grid;
+   grid-column: 2/3;
+   justify-content: start;
+   grid-template-columns: repeat(auto-fill, minmax(min-content, max-content));
+   /* grid-template-rows: 100% 1fr; */
+   padding: 1rem 0;
+   grid-gap: 0.5rem;
 `;
 
 const TrackName = styled.span`
-  grid-row: 1/2;
-  justify-self: start;
-  font-size: 1rem;
-  width: max-content;
+   grid-row: 1/2;
+   justify-self: start;
+   font-size: 1rem;
+   width: max-content;
 `;
 
 const Explicit = styled.span`
-  display: ${props => (props.explicit ? 'grid' : 'none')};
-  grid-row: ${props => (props.type === 'artist' ? '2/3' : '1/2')};
-  /* grid-column: 1/2; */
-  font-weight: 300;
-  padding: 2px 5px;
-  background-color: rgba(255, 255, 255, 0.6);
-  color: black;
-  border-radius: 2px;
-  /* width: 11rem; */
-  /* width: min-content; */
+   display: ${props => (props.explicit ? "grid" : "none")};
+   grid-row: ${props => (props.type === "artist" ? "2/3" : "1/2")};
+   /* grid-column: 1/2; */
+   font-weight: 300;
+   padding: 2px 5px;
+   background-color: rgba(255, 255, 255, 0.6);
+   color: black;
+   border-radius: 2px;
+   /* width: 11rem; */
+   /* width: min-content; */
 `;
 
 const RowContainer = styled.span`
    display: grid;
    color: rgba(255, 255, 255, 0.6);
-   /* grid-column: ${props => (props.type === 'artist' ? '2/-1' : '')}; */
+   /* grid-column: ${props => (props.type === "artist" ? "2/-1" : "")}; */
    grid-row: 2/3;
    grid-gap: 0.5rem;
    justify-content: start;
@@ -92,78 +93,88 @@ const RowContainer = styled.span`
 `;
 
 const Name = styled.a`
-  grid-row: 1/2;
-  color: inherit;
-  border-bottom: 1px solid transparent;
-  padding-bottom: 3px;
+   grid-row: 1/2;
+   color: inherit;
+   border-bottom: 1px solid transparent;
+   padding-bottom: 3px;
 
-  &:hover {
-    color: var(--color-white);
-    border-bottom: 1px solid currentColor;
-  }
+   &:hover {
+      color: var(--color-white);
+      border-bottom: 1px solid currentColor;
+   }
 `;
 
 const Dot = styled.span`
-  margin-top: -5px;
-  grid-row: 1/2;
-  font-weight: 900;
-  font-size: 1.3rem;
+   margin-top: -5px;
+   grid-row: 1/2;
+   font-weight: 900;
+   font-size: 1.3rem;
 `;
 
 const MenuEllipsis = styled.a`
-  grid-row: 1/2;
-  color: white;
-  position: absolute;
-  right: 7rem;
-  top: -1rem;
-  font-size: 2.5rem;
-  display: none;
+   grid-row: 1/2;
+   color: white;
+   position: absolute;
+   right: 7rem;
+   top: -1rem;
+   font-size: 2.5rem;
+   display: none;
 `;
 
 const TrackDuration = styled.span`
-  position: absolute;
-  right: 1rem;
-  grid-row: 1/2;
-  letter-spacing: 1px;
-  font-size: 1rem;
+   position: absolute;
+   right: 1rem;
+   grid-row: 1/2;
+   letter-spacing: 1px;
+   font-size: 1rem;
 `;
 
-const Track = ({ type, albumImage, artists, trackName, albumName, trackDuration, explicit }) => {
-  console.log(albumImage);
-  function millisToMinutesAndSeconds(millis) {
-    const minutes = Math.floor(millis / 60000);
-    const seconds = ((millis % 60000) / 1000).toFixed(0);
-    return seconds === 60
-      ? minutes + 1 + ':00'
-      : minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
-  }
-  console.log(trackName, 'DATA type in Track: ', type);
+const Track = ({
+   type,
+   albumImage,
+   artists,
+   trackName,
+   albumName,
+   trackDuration,
+   explicit
+}) => {
+   function millisToMinutesAndSeconds(millis) {
+      const minutes = Math.floor(millis / 60000);
+      const seconds = ((millis % 60000) / 1000).toFixed(0);
+      return seconds === 60
+         ? minutes + 1 + ":00"
+         : minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+   }
 
-  return (
-    <PlaylistWrapper type="artist">
-      {type === 'artist' && albumImage ? (
-        <AlbumImage type="artist" src={albumImage} alt="Album Image" />
-      ) : null}
-      <TrackWraper>
-        <TrackName>{trackName}</TrackName>
+   return (
+      <PlaylistWrapper type="artist">
+         {type === "artist" && albumImage ? (
+            <AlbumImage type="artist" src={albumImage} alt="Album Image" />
+         ) : null}
+         <TrackWraper>
+            <TrackName>{trackName}</TrackName>
 
-        <RowContainer>
-          <Explicit explicit={explicit}>{explicit ? 'EXPLICIT' : null}</Explicit>
-          {type !== 'artist' && type !== 'album' ? (
-            <React.Fragment>
-              <Name href="#">{displayArtistName(artists)}</Name>
-              <Dot>&sdot;</Dot>
-              <Name href="#">{albumName}</Name>
-            </React.Fragment>
-          ) : null}
+            <RowContainer>
+               <Explicit explicit={explicit}>
+                  {explicit ? "EXPLICIT" : null}
+               </Explicit>
+               {type !== "artist" && type !== "album" ? (
+                  <React.Fragment>
+                     <Name href="#">{displayArtistName(artists)}</Name>
+                     <Dot>&sdot;</Dot>
+                     <Name href="#">{albumName}</Name>
+                  </React.Fragment>
+               ) : null}
 
-          <MenuEllipsis href="#">&hellip;</MenuEllipsis>
+               <MenuEllipsis href="#">&hellip;</MenuEllipsis>
 
-          <TrackDuration>{millisToMinutesAndSeconds(trackDuration)}</TrackDuration>
-        </RowContainer>
-      </TrackWraper>
-    </PlaylistWrapper>
-  );
+               <TrackDuration>
+                  {millisToMinutesAndSeconds(trackDuration)}
+               </TrackDuration>
+            </RowContainer>
+         </TrackWraper>
+      </PlaylistWrapper>
+   );
 };
 
 export default Track;
