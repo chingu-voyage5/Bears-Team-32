@@ -1,0 +1,5 @@
+{
+  "deploy": {
+    "surge": "http://bears-team-32.surge.sh/"
+  }
+}
