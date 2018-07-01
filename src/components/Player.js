@@ -4,6 +4,12 @@ import FontAwesome from 'react-fontawesome';
 import 'font-awesome/css/font-awesome.css';
 import './Player.css';
 
+function LogInfo(source, message) {
+  console.log(`===== ${source} START =====`)
+  console.log(message);
+  console.log(`===== ${source} END =====`)
+}
+
 class Player extends Component {
   constructor() {
     super();
@@ -17,7 +23,7 @@ class Player extends Component {
     // API Link to Shakira's El Dorado album
     const apiLink = "https://jffy-api.herokuapp.com/api/v1/spotify/?query=https://api.spotify.com/v1/tracks/1D8bmUIhLHEO4KMS2SHwUx";
     axios.get(apiLink).then(res => {
-      // console.log(res); // shows complete response
+      LogInfo("Player", res); // shows complete message
       this.setState({
         album: res.data.album,
         artists: res.data.artists
@@ -78,9 +84,35 @@ class Player__left extends Component {
 }
 
 class Player__center extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      audio: "https://p.scdn.co/mp3-preview/b36585e9128f536444f4ed9eb1f327203d147dce?cid=4181eaff195a47029bfbc102712c82c1",
+      playing: false,
+    }
+  }
+
+  togglePlay = () => {
+    // Select the audio element
+    const player = document.querySelector(".audiosrc");
+    
+    // Is the audio playing?
+    this.setState({
+      playing: !this.state.playing,
+    });
+
+    // Play/Pause the audio stream
+    if(this.state.playing) {
+      player.pause();
+    } else {
+      player.play();
+    }
+  }
+  
   render() {
     return (
       <div className="player__center">
+        <audio className="audiosrc" src={this.state.audio}></audio>
         <div className="player-controls">
           <div className="player-controls__buttons">
             <button className="control-button">
@@ -89,9 +121,13 @@ class Player__center extends Component {
             <button className="control-button">
               <FontAwesome name="step-backward" />
             </button>
-            <button className="control-button control-button--circled">
-              {/* <FontAwesome name="play fa-sm"/> */}
-              <FontAwesome name="pause fa-sm"/>
+            <button className="control-button control-button--circled" onClick={this.togglePlay}>
+              { !this.state.playing &&
+                <FontAwesome name="play fa-sm"/>
+              }
+              { this.state.playing &&
+                <FontAwesome name="pause fa-sm"/>
+              }
             </button>
             <button className="control-button">
               <FontAwesome name="step-forward" />
