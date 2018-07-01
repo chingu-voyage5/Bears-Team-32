@@ -4,7 +4,7 @@ import Home from '../containers/Home';
 import TracksContainer from '../containers/TracksContainer';
 import Search from '../containers/Search';
 import Layout from './Layout';
-import Collection from '../containers/Collection';
+
 class Routes extends Component {
   render() {
     return (
@@ -15,7 +15,7 @@ class Routes extends Component {
         <Route path="/album" render={() => <TracksContainer name="album" />} />
         <Route path="/artist" render={() => <TracksContainer name="artist" />} />
         <Route path="/playlist" render={() => <TracksContainer name="playlist" />} />
-        <Route path="/collection" component={Collection} />
+        <Route path="/collection/playlist" render={() => <h1>Library</h1>} />
         <Route render={() => <Layout name={'No Match'} />} />
       </Switch>
     );

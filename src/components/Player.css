@@ -1,3 +1,5 @@
+
+
 a, a:focus, a:hover {
     text-decoration: none;
 }
@@ -45,18 +47,6 @@ a:focus, a:hover {
     user-select: none; /* prevent selection */
     padding: 0 16px;
 }
-
-.playerBar,
-.playerBar button,
-.playerBar input {
-    /* style on the body in original */
-    color: hsla(0,0%,100%,0.6);
-    text-transform: none;
-}
-
-/* ============================== */
-/* Styling of left of Player bar */
-/* ============================== */
 
 .player__left {
     width: 30%;
@@ -123,136 +113,22 @@ a:focus, a:hover {
     color:#fff;
 }
 
-/* =============================== */
-/* Styling of center of Player bar */
-/* =============================== */
-
 .player__center {
     width: 40%;
     max-width: 722px;
+    background-color: pink; /* debug */
 }
-
-.player-controls {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.player-controls__buttons {
-    margin-bottom: 12px;
-    display: flex;
-    width: 224px;
-    justify-content: space-between;
-    flex-flow: row nowrap;
-}
-
-.playback-bar {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.playback-bar__progress-time {
-    font-size: 11px;
-    line-height: 16px;
-    letter-spacing: .015em;
-    min-width: 40px;
-    text-align: center;
-}
-
-.progress-bar {
-    height: 12px;
-    position: relative;
-    width: 100%;
-}
-
-.middle-align {
-    position: absolute;
-    top: 5px;
-    transform: translateY(-50%);
-}
-
-.progress-bar__bg {
-    background-color: #404040;
-    border-radius: 2px;
-    display: flex;
-    height: 4px;
-    width: 100%;
-}
-
-.progress-bar__fg {
-    transition-property: background-color;
-    transition-duration: .1s;
-    transition-timing-function: cubic-bezier(1,0,.7,1);
-    background-color: #b3b3b3;
-    border-radius: 2px;
-    height: 4px;
-    width: 0;
-}
-
-.progress-bar__slider {
-    transition-property: transform;
-    transition-duration: .1s;
-    transition-timing-function: cubic-bezier(1,0,.7,1);
-    background-color: #fff;
-    border-radius: 50%;
-    width: 12px;
-    height: 12px;
-    margin-left: -6px;
-    margin-top: -8px;
-    z-index: 100;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .5);
-    transform: scale(0);
-}
-
-/* Hover on progress-bar */
-.progress-bar:hover .progress-bar__slider {
-    transition-property: transform;
-    transition-duration: .1s;
-    transition-timing-function: cubic-bezier(.3,0,0,1);
-    transform: scale(1);
-}
-
-.progress-bar:hover .progress-bar__fg {
-    transition-property: transform;
-    transition-duration: .1s;
-    transition-timing-function: cubic-bezier(.3,0,0,1);
-    background-color: #1db954;
-}
-
-/* ============================== */
-/* Styling of right of Player bar */
-/* ============================== */
 
 .player__right {
     width: 30%;
     min-width: 180px;
+    background-color: green; /* debug */
+}
+
+.now-playing { 
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-}
-
-.player__right__inner {
-    width: 180px;
-}
-
-.extra-controls {
-    display: flex;
-    justify-content: flex-end;
     align-items: center;
-}
-
-.connect-device-picker {
-    position: relative;
-}
-
-.volume-bar {
-    align-items: center;
-    width: 136px;
-    display: flex;
 }
 
 .control-button {
@@ -267,24 +143,4 @@ a:focus, a:hover {
 
 .control-button:hover {
     color: #fff;
-}
-
-.control-button--circled::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    border-radius: 500px;
-    border: 1px solid hsla(0, 0%, 100%, .6);
-}
-
-.control-button--circled:hover {
-    transform: scale(1.06);
-}
-
-.control-button--circled:hover::after {
-    color: #fff;
-    transform: scale(1.06);
 }
