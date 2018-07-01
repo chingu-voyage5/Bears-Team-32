@@ -93,15 +93,26 @@ class Player__center extends Component {
   }
 
   togglePlay = () => {
+    // Select the audio element
+    const player = document.querySelector(".audiosrc");
+    
+    // Is the audio playing?
     this.setState({
       playing: !this.state.playing,
     });
+
+    // Play/Pause the audio stream
+    if(this.state.playing) {
+      player.pause();
+    } else {
+      player.play();
+    }
   }
   
   render() {
     return (
       <div className="player__center">
-        <audio controls src={this.state.audio}></audio>
+        <audio className="audiosrc" src={this.state.audio}></audio>
         <div className="player-controls">
           <div className="player-controls__buttons">
             <button className="control-button">
