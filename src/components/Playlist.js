@@ -69,15 +69,7 @@ const Playlist = ({ data }) => {
           {tracks.total > 1 ? `${tracks.total} SONGS` : `1 SONG`}
         </Paragraph>
         <ButtonPrimary>Play</ButtonPrimary>
-        <div
-          onClick={() => {
-            const items = Storage.getItems(type);
-            items.push(data);
-            Storage.setItems(type, items);
-          }}
-        >
-          Save to your library
-        </div>
+        <div onClick={() => Storage.setItem(type, data)}>Save to your library</div>
       </CardWrapper>
       <TracksWrapper>{tracksPlaylist}</TracksWrapper>
     </PlaylistContainer>
