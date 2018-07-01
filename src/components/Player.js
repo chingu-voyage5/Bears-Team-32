@@ -9,7 +9,7 @@ class Player extends Component {
     super();
     this.state = {
       album: {},
-      artists: {}
+      artists: []
     }
   }
 
@@ -22,7 +22,6 @@ class Player extends Component {
         album: res.data.album,
         artists: res.data.artists
       });
-      console.log(this.state);
     });
   }
 
@@ -30,7 +29,7 @@ class Player extends Component {
     return (
       <footer className="playerBar-container">
         <div className="playerBar">
-          <Player__left />
+          <Player__left trackData = {this.state}/>
           <Player__center />
           <Player__right />
         </div>
@@ -40,6 +39,18 @@ class Player extends Component {
 }
 
 class Player__left extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  componentDidUpdate() {
+    console.log(this.state);
+    this.state = this.props.trackData;
+    console.log(this.state);
+    // console.log(this.state.artists[0].name);
+  }
+
   render () {
     return (
       <div className="player__left">
@@ -53,7 +64,7 @@ class Player__left extends Component {
             </div>
             <div className="track-info__artists link-subtle elipsis-one-line">
               <a href="">
-                Perfume
+
               </a>
             </div>
           </div>
