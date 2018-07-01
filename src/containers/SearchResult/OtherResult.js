@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Card from '../../components/Card';
 import { Link } from 'react-router-dom';
 import Layout from '../../components/Layout';
+import Storage from '../../Storage';
+import { withRouter } from 'react-router';
 class OtherResult extends Component {
   cardProps = result => {
     const { type } = this.props;
@@ -33,24 +35,27 @@ class OtherResult extends Component {
   };
 
   addRecentSearch = result => {
-    let record = {
-      type: this.props.type,
-      name: result.name,
-      id: result.id,
-    };
-
-    let currentItems = JSON.parse(localStorage.getItem('bears-team-32')) || [];
-    if (currentItems.length === 4) {
-      currentItems.pop();
+    const { pathname } = this.props.location;
+    if (pathname.includes('search')) {
+      let currentItems = Storage.getItems('recent');
+      if (currentItems.filter(item => item.id === result.id).length === 0) {
+        let newItem = {
+          type: this.props.type,
+          name: result.name,
+          id: result.id,
+        };
+        currentItems.length === 4 && currentItems.pop();
+        currentItems.unshift(newItem);
+        Storage.setItems('recent', currentItems);
+      }
     }
-    currentItems.unshift(record);
-    localStorage.setItem('bears-team-32', JSON.stringify(currentItems));
   };
 
   render() {
-    const { type, results } = this.props;
+    const { type, results, bgColor } = this.props;
+    console.log(this.props);
     return (
-      <Layout header={type} bgColor="black">
+      <Layout header={type} bgColor={bgColor || 'black'}>
         {results.map(result => (
           <Link
             to={`/${type}/${result.id}`}
@@ -65,4 +70,4 @@ class OtherResult extends Component {
   }
 }
 
-export default OtherResult;
+export default withRouter(OtherResult);
