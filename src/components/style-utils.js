@@ -82,4 +82,5 @@ export const HeadingPrimary = styled.h1`
   justify-self: center;
   text-align: center;
   line-height: 1.4;
+  text-transform: capitalize;
 `;

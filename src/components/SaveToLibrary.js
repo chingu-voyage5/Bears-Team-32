@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Storage from '../Storage';
-import StorageContext from './storageContext';
+import StorageContext from './StorageContext';
 class SaveToLibrary extends Component {
   state = { saved: Storage.itemExists(this.props.type, this.props.item) };
 

@@ -28,7 +28,20 @@ const Paragraph = styled.p`
   font-size: 0.8rem;
 `;
 
-const Playlist = ({ data }) => {
+const Save = styled.div`
+  font-size: 0.9rem;
+  color: ${props => (props.saved ? '#1dac4f' : 'white')};
+  cursor: pointer;
+  letter-spacing: 0.1rem;
+  &:hover {
+    transform: scale(1.1);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+`;
+
+const Playlist = ({ data, bgColor }) => {
   if (!data) {
     return null;
   }
@@ -72,9 +85,9 @@ const Playlist = ({ data }) => {
         <ButtonPrimary>Play</ButtonPrimary>
         <SaveToLibrary type={type} item={data}>
           {status => (
-            <div onClick={status.clickHandler}>
+            <Save onClick={status.clickHandler} saved={status.saved}>
               {status.saved ? 'Remove from your library' : 'Save to your library'}
-            </div>
+            </Save>
           )}
         </SaveToLibrary>
       </CardWrapper>

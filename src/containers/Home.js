@@ -88,21 +88,11 @@ const HomeWrapper = styled.div`
 
 const Wrapper = styled.div`
   box-sizing: border-box;
-  background-color: ${props => props.bgColor};
   position: relative;
   min-height: 100%;
   padding-top: 2rem;
   transition: background-color 500ms;
-  &::before {
-    content: '';
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    bottom: 0;
-    left: 0;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
-  }
+  background: ${props => `linear-gradient(to bottom, ${props.bgColor}, rgba(0, 0, 0, 0.8))`};
 `;
 
 const StyledLink = styled(Link)`
