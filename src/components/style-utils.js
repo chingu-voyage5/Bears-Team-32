@@ -8,22 +8,6 @@ export const respond = {
   `,
 };
 
-// export const makeArtistArray = artists => {
-//    let artistArray = [];
-//    console.log("makeArtistArray", artists);
-//    if (artists && artists.length > 0) {
-//       if (artists.length > 1) {
-//          artists.map(artist => {
-//             console.log("artist", artist.name);
-
-//             return artistArray.push(artist.name);
-//          });
-//       } else {
-//          return (artistArray = [artists[0].name]);
-//       }
-//    }
-// };
-
 export const displayArtistName = artists => {
   return artists && artists.length > 1
     ? artists.map(artist => (artist === artists[artists.length - 1] ? artist : `${artist}, `))

@@ -13,6 +13,7 @@ class OtherResult extends Component {
       type: type === 'artist' ? null : 'album',
     };
     if (type === 'album') {
+      alert('album');
       return {
         ...baseProps,
         artists: result.artists,
