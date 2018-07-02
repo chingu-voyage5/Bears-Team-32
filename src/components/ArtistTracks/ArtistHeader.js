@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-
+import SaveToLibrary from '../SaveToLibrary';
 class ArtistHeader extends Component {
   formatNumber = number => {
     return new Intl.NumberFormat().format(number);
@@ -14,7 +14,13 @@ class ArtistHeader extends Component {
         <ArtistTitle>{artist.name}</ArtistTitle>
         <ButtonGroup>
           <PlayButton>Play</PlayButton>
-          <SaveButton>Save to your library</SaveButton>
+          <SaveToLibrary type="artist" item={artist}>
+            {status => (
+              <SaveButton onClick={status.clickHandler}>
+                {status.saved ? 'Remove from your library' : 'Save to your library'}
+              </SaveButton>
+            )}
+          </SaveToLibrary>
           <MoreButton>...</MoreButton>
         </ButtonGroup>
         <StyledNav>
@@ -66,6 +72,7 @@ const StyledButton = styled.button`
   min-width: 130px;
   padding: 0.8rem 3rem;
   text-transform: uppercase;
+  cursor: pointer;
 `;
 
 const PlayButton = StyledButton.extend`

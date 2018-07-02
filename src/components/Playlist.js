@@ -5,7 +5,7 @@ import Track from '../components/Track';
 import ButtonPrimary from '../components/ButtonPrimary';
 import moment from 'moment';
 import Storage from '../Storage';
-import SaveButton from './SaveButton';
+import SaveToLibrary from './SaveToLibrary';
 const PlaylistContainer = styled.section`
   display: grid;
   grid-template-columns: 30% 1fr;
@@ -71,7 +71,13 @@ const Playlist = ({ data }) => {
         </Paragraph>
         <ButtonPrimary>Play</ButtonPrimary>
         {/* <div onClick={() => Storage.setItem(type, data)}>Save to your library</div> */}
-        <SaveButton type={type} item={data} />
+        <SaveToLibrary type={type} item={data}>
+          {status => (
+            <div onClick={status.clickHandler}>
+              {status.saved ? 'Remove from your library' : 'Save to your library'}
+            </div>
+          )}
+        </SaveToLibrary>
       </CardWrapper>
       <TracksWrapper>{tracksPlaylist}</TracksWrapper>
     </PlaylistContainer>
