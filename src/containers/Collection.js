@@ -5,6 +5,8 @@ import CollectionEmpty from './CollectionEmpty';
 import OtherResult from './SearchResult/OtherResult';
 import TrackResult from './SearchResult/TrackResult';
 import Storage from '../Storage';
+import StorageContext from '../components/storageContext';
+
 const Links = [
   { type: 'playlist', name: 'playlists', to: '/collection/playlists' },
   { type: 'track', name: 'songs', to: '/collection/tracks' },
@@ -12,13 +14,13 @@ const Links = [
   { type: 'artist', name: 'artists', to: '/collection/artists' },
 ];
 class Collection extends Component {
-  state = { currentLink: Links[0] };
+  state = { currentLink: Links[0], items: Storage.getItems(Links[0].type) };
   clickHandler = selectedlinkName => {
     const selectedLink = Links.filter(link => {
       return link.name === selectedlinkName;
     })[0];
     document.title = selectedLink.name;
-    this.setState({ currentLink: selectedLink });
+    this.setState({ currentLink: selectedLink, items: Storage.getItems(selectedLink.type) });
   };
 
   linkProps = ({ to, name }) => {
@@ -32,7 +34,8 @@ class Collection extends Component {
   };
 
   getRoutes = ({ type, to }) => {
-    const items = Storage.getItems(type);
+    // const items = Storage.getItems(type);
+    const { items } = this.state;
     const layoutComp =
       items.length > 0 ? (
         type === 'track' ? (
@@ -46,14 +49,20 @@ class Collection extends Component {
     return <Route path={to} render={() => layoutComp} key={type} />;
   };
 
+  refreshItems = () => {
+    this.setState(({ currentLink }) => ({ items: Storage.getItems(currentLink.type) }));
+  };
+
   render() {
     return (
-      <CollectionWrapper>
-        <Wrapper bgColor="#1E3263">
-          {Links.map(link => <StyledLink {...this.linkProps(link)}>{link.name}</StyledLink>)}
-          <Switch>{Links.map(link => this.getRoutes(link))}</Switch>
-        </Wrapper>
-      </CollectionWrapper>
+      <StorageContext.Provider value={{ handler: this.refreshItems }}>
+        <CollectionWrapper>
+          <Wrapper bgColor="#1E3263">
+            {Links.map(link => <StyledLink {...this.linkProps(link)}>{link.name}</StyledLink>)}
+            <Switch>{Links.map(link => this.getRoutes(link))}</Switch>
+          </Wrapper>
+        </CollectionWrapper>
+      </StorageContext.Provider>
     );
   }
 }

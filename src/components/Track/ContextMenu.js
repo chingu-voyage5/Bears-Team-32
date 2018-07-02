@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-
+import SaveButton from '../SaveButton';
 class ContextMenu extends Component {
   render() {
-    const { pos, addToLibrary } = this.props;
+    const { pos, type, data } = this.props;
     return (
       <Wrapper pos={pos}>
         <div>Start Radio</div>
-        <div onClick={addToLibrary}>Add to library</div>
+        <SaveButton type={type} item={data} />
         <div>Add to playlist</div>
       </Wrapper>
     );

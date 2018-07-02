@@ -174,6 +174,7 @@ class Track extends Component {
       trackDuration,
       explicit,
       id,
+      data,
     } = this.props;
     const { toggleMenu, menuPos } = this.state;
     return (
@@ -198,12 +199,7 @@ class Track extends Component {
 
             <TrackDuration>{moment(trackDuration).format('m:ss')}</TrackDuration>
           </RowContainer>
-          {toggleMenu && (
-            <ContextMenu
-              pos={menuPos}
-              addToLibrary={() => Storage.setItem('track', this.props.data)}
-            />
-          )}
+          {toggleMenu && <ContextMenu pos={menuPos} type="track" data={data} />}
         </TrackWraper>
       </PlaylistWrapper>
     );
