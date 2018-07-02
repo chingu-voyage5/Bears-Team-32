@@ -28,6 +28,10 @@ class Routes extends Component {
                path="/playlist"
                render={() => <TracksContainer name="playlist" />}
             />
+            <Route
+               path="/categories"
+               render={() => <TracksContainer name="categories" />}
+            />
             <Route path="/collection" component={Collection} />
             <Route render={() => <Layout name={"No Match"} />} />
          </Switch>

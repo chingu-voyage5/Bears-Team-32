@@ -32,13 +32,13 @@ class HomeResult extends Component {
    getItems = () => {
       return this.state.data.map(item => {
          return (
-            <Fragment>
+            <Fragment key={item.id}>
                {item.type ? (
-                  <Link key={item.id} to={`/${item.type}/${item.id}`}>
+                  <Link to={`/${item.type}/${item.id}`}>
                      {this.getCardByType(item)}
                   </Link>
                ) : (
-                  <Link key={item.id} to={`/categories/${item.id}/playlists`}>
+                  <Link to={`/categories/${item.id}/playlists`}>
                      {this.getCardByType(item)}
                   </Link>
                )}

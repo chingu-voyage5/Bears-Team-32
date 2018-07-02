@@ -1,30 +1,4 @@
-<<<<<<< HEAD
-import React, { Component } from 'react';
-import TrackResult from './TrackResult';
-import OtherResult from './OtherResult';
-import Card from '../../components/Card';
-import styled from 'styled-components';
-class TopResult extends Component {
-  render() {
-    const { results } = this.props;
-    const artist = results.artist[0];
-    return (
-      <div>
-        <Wrapper>
-          <CardWrapper>
-            <Card image={artist.images[0].url} name={artist.name} circle="circle" />
-          </CardWrapper>
-          <TrackResult type="track" results={results.track} />
-        </Wrapper>
-        <OtherResult type="artist" results={results.artist} />
-        <OtherResult type="album" results={results.album} />
-        <OtherResult type="playlist" results={results.playlist} />
-      </div>
-    );
-  }
-=======
 import React, { Component } from "react";
-import SearchResult from "../../containers/SearchResult";
 import TrackResult from "./TrackResult";
 import OtherResult from "./OtherResult";
 import Card from "../../components/Card";
@@ -32,7 +6,6 @@ import styled from "styled-components";
 class TopResult extends Component {
    render() {
       const { results } = this.props;
-      // console.log(results.track);
       const artist = results.artist[0];
       return (
          <div>
@@ -52,7 +25,6 @@ class TopResult extends Component {
          </div>
       );
    }
->>>>>>> home
 }
 
 export default TopResult;
