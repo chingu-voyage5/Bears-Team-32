@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import CollectionEmpty from './CollectionEmpty';
+import OtherResult from './SearchResult/OtherResult';
+import TrackResult from './SearchResult/TrackResult';
+import Storage from '../Storage';
 const Links = [
-  { name: 'playlists', to: '/collection/playlists' },
-  { name: 'songs', to: '/collection/tracks' },
-  { name: 'albums', to: '/collection/albums' },
-  { name: 'artists', to: '/collection/artists' },
+  { type: 'playlist', name: 'playlists', to: '/collection/playlists' },
+  { type: 'track', name: 'songs', to: '/collection/tracks' },
+  { type: 'album', name: 'albums', to: '/collection/albums' },
+  { type: 'artist', name: 'artists', to: '/collection/artists' },
 ];
 class Collection extends Component {
   state = { currentLink: Links[0] };
@@ -28,21 +31,27 @@ class Collection extends Component {
     };
   };
 
-  // getRoutes = ({ name, to, api }) => {
-  //   const layoutComp = <HomeResult name={name} api={api} />;
-  //   return name !== 'featured' ? <Route path={to} render={() => layoutComp} key={name} /> : null;
-  // };
+  getRoutes = ({ type, to }) => {
+    const items = Storage.getItems(type);
+    const layoutComp =
+      items.length > 0 ? (
+        type === 'track' ? (
+          <TrackResult type={type} results={items} />
+        ) : (
+          <OtherResult type={type} results={items} bgColor="transparent" />
+        )
+      ) : (
+        <CollectionEmpty />
+      );
+    return <Route path={to} render={() => layoutComp} key={type} />;
+  };
 
   render() {
     return (
       <CollectionWrapper>
         <Wrapper bgColor="#1E3263">
           {Links.map(link => <StyledLink {...this.linkProps(link)}>{link.name}</StyledLink>)}
-          <CollectionEmpty />
-          {/* <Switch>
-            {Links.map(link => this.getRoutes(link))}
-            <Route render={() => <HomeResult name={Links[0].name} api={Links[0].api} />} />
-          </Switch> */}
+          <Switch>{Links.map(link => this.getRoutes(link))}</Switch>
         </Wrapper>
       </CollectionWrapper>
     );
