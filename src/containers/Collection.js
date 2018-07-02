@@ -6,6 +6,7 @@ import OtherResult from './SearchResult/OtherResult';
 import TrackResult from './SearchResult/TrackResult';
 import Storage from '../Storage';
 import StorageContext from '../components/storageContext';
+import { withRouter } from 'react-router';
 
 const Links = [
   { type: 'playlist', name: 'playlists', to: '/collection/playlists' },
@@ -15,13 +16,28 @@ const Links = [
 ];
 class Collection extends Component {
   state = { currentLink: Links[0], items: Storage.getItems(Links[0].type) };
+
   clickHandler = selectedlinkName => {
-    const selectedLink = Links.filter(link => {
-      return link.name === selectedlinkName;
-    })[0];
+    const selectedLink = Links.filter(link => link.name === selectedlinkName)[0];
     document.title = selectedLink.name;
     this.setState({ currentLink: selectedLink, items: Storage.getItems(selectedLink.type) });
   };
+
+  static getDerivedStateFromProps(props, state) {
+    const { pathname } = props.location;
+    if (pathname.includes('/collection')) {
+      if (pathname !== state.currentLink.to) {
+        const selectedLink = Links.filter(link => link.to === pathname)[0];
+        if (selectedLink) {
+          document.title = selectedLink.name;
+          return { currentLink: selectedLink, items: Storage.getItems(selectedLink.type) };
+        }
+      }
+    }
+
+    // No state update necessary
+    return null;
+  }
 
   linkProps = ({ to, name }) => {
     const { currentLink } = this.state;
@@ -67,7 +83,7 @@ class Collection extends Component {
   }
 }
 
-export default Collection;
+export default withRouter(Collection);
 
 const CollectionWrapper = styled.div`
   height: 100%;
