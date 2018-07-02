@@ -9,8 +9,8 @@ class Overview extends Component {
     const { artist, albums, singles, topTracks } = this.props;
     return (
       <div>
-        <div>
-          <Popular>Popular</Popular>
+        <Popular>
+          <Header>Popular</Header>
           {topTracks.map(track => (
             <Track
               type="artist"
@@ -23,19 +23,21 @@ class Overview extends Component {
               data={track}
             />
           ))}
-        </div>
-        <Layout header="Albums">
-          {albums.map(album => (
-            <Card
-              key={album.id}
-              name={album.name}
-              image={album.images[0].url}
-              type="album"
-              artists={[artist]}
-            />
-          ))}
-        </Layout>
-        <Layout header="Singles">
+        </Popular>
+        {albums.length > 0 && (
+          <Layout header="Albums" bgColor="black">
+            {albums.map(album => (
+              <Card
+                key={album.id}
+                name={album.name}
+                image={album.images[0].url}
+                type="album"
+                artists={[artist]}
+              />
+            ))}
+          </Layout>
+        )}
+        <Layout header="Singles" bgColor="#181818">
           {singles.map(single => (
             <Card
               key={single.id}
@@ -53,7 +55,12 @@ class Overview extends Component {
 
 export default Overview;
 
-const Popular = styled.h1`
-  font-size: 3rem;
+const Header = styled.h1`
+  font-size: 2.5rem;
   font-weight: 600;
+  margin-bottom: 2rem;
+`;
+const Popular = styled.h1`
+  background: #181818;
+  padding-top: 1.5rem;
 `;

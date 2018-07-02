@@ -11,7 +11,8 @@ class ArtistHeader extends Component {
   render() {
     const { artist } = this.props;
     return (
-      <div>
+      <Wrapper>
+        <ArtistImage bgImg={artist.images[0].url} />
         <ArtistFollower>{this.formatNumber(artist.followers.total)} followers</ArtistFollower>
         <ArtistTitle>{artist.name}</ArtistTitle>
         <ButtonGroup>
@@ -36,12 +37,39 @@ class ArtistHeader extends Component {
             <MenuItem>about</MenuItem>
           </ul>
         </StyledNav>
-      </div>
+      </Wrapper>
     );
   }
 }
 
 export default ArtistHeader;
+
+const Wrapper = styled.div`
+  position: relative;
+`;
+
+const ArtistImage = styled.div`
+  position: absolute;
+  background-image: ${props => `url(${props.bgImg})`};
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+
+  &::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background: linear-gradient(to bottom, rgba(24, 24, 24, 0), rgba(24, 24, 24, 1));
+  }
+`;
 
 const ArtistFollower = styled.span`
   color: gray;
@@ -66,6 +94,7 @@ const MenuItem = styled.li`
   text-transform: uppercase;
   letter-spacing: 0.15rem;
   font-size: 12px;
+  z-index: 9999;
 `;
 
 const StyledButton = styled.button`
@@ -88,7 +117,6 @@ const PlayButton = StyledButton.extend`
 `;
 
 const SaveButton = StyledButton.extend`
-  /* border: */
   box-shadow: inset 0 0 0 2px #b3b3b3;
   background: hsla(0, 0%, 9%, 0.7);
   outline: none;

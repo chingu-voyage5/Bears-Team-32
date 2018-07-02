@@ -6,7 +6,7 @@ import AlbumTracks from '../components/AlbumTracks';
 import styled from 'styled-components';
 const TrackComponents = {
   playlist: { comp: PlaylistTracks, bgColor: '#545442' },
-  artist: { comp: ArtistTracks, bgColor: '#34565A' },
+  artist: { comp: ArtistTracks, bgColor: 'none' },
   album: { comp: AlbumTracks, bgColor: '#38332B' },
 };
 
