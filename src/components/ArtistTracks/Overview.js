@@ -19,6 +19,8 @@ class Overview extends Component {
               trackName={track.name}
               trackDuration={track.duration_ms}
               explicit={track.explicit}
+              id={track.id}
+              data={track}
             />
           ))}
         </div>

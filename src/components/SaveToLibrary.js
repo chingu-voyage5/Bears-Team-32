@@ -2,21 +2,23 @@ import React, { Component } from 'react';
 import Storage from '../Storage';
 import StorageContext from './storageContext';
 class SaveToLibrary extends Component {
+  state = { saved: Storage.itemExists(this.props.type, this.props.item) };
+
   saveHandler = () => {
     const { type, item } = this.props;
     Storage.setItem(type, item);
+    this.setState({ saved: true });
   };
 
   removeHandler = () => {
     const { type, item } = this.props;
     Storage.removeItem(type, item);
+    this.setState({ saved: false });
   };
 
   childProps = contextHandler => {
-    const { type, item } = this.props;
-    const saved = Storage.itemExists(type, item);
     return {
-      clickHandler: saved
+      clickHandler: this.state.saved
         ? () => {
             this.removeHandler();
             contextHandler();
@@ -25,7 +27,7 @@ class SaveToLibrary extends Component {
             this.saveHandler();
             contextHandler();
           },
-      saved,
+      ...this.state,
     };
   };
 

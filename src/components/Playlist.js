@@ -4,8 +4,8 @@ import Card from '../components/Card';
 import Track from '../components/Track';
 import ButtonPrimary from '../components/ButtonPrimary';
 import moment from 'moment';
-import Storage from '../Storage';
 import SaveToLibrary from './SaveToLibrary';
+
 const PlaylistContainer = styled.section`
   display: grid;
   grid-template-columns: 30% 1fr;
@@ -70,7 +70,6 @@ const Playlist = ({ data }) => {
           {tracks.total > 1 ? `${tracks.total} SONGS` : `1 SONG`}
         </Paragraph>
         <ButtonPrimary>Play</ButtonPrimary>
-        {/* <div onClick={() => Storage.setItem(type, data)}>Save to your library</div> */}
         <SaveToLibrary type={type} item={data}>
           {status => (
             <div onClick={status.clickHandler}>

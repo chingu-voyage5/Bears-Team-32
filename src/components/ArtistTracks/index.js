@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ArtistHeader from './ArtistHeader';
-import styled from 'styled-components';
 import Overview from './Overview';
 import OtherResult from '../../containers/SearchResult/OtherResult';
 import { Route, Switch } from 'react-router-dom';

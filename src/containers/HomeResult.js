@@ -3,23 +3,20 @@ import axios from 'axios';
 import Card from '../components/Card';
 import Layout from '../components/Layout';
 
-const CancelToken = axios.CancelToken;
-const source = CancelToken.source();
-
 class HomeResult extends Component {
   state = { data: [] };
-
+  source = axios.CancelToken.source();
   componentDidMount() {
     axios
       .get(this.props.api, {
-        cancelToken: source.token,
+        cancelToken: this.source.token,
       })
       .then(({ data }) => {
         this.setState({ data: data.items });
       })
       .catch(error => {
         if (axios.isCancel(error)) {
-          console.log('Request canceled', error.message);
+          console.log('Request canceled :', error.message);
         } else {
           console.log(error.message);
         }
@@ -28,7 +25,7 @@ class HomeResult extends Component {
 
   componentWillUnmount() {
     // Cancel request when component is unmounting before request is completed
-    source.cancel('Operation canceled by the user.');
+    this.source.cancel(`Operation canceled by the user.`);
   }
 
   getItems = () => {

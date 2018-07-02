@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { displayArtistName } from '../style-utils';
 import moment from 'moment';
 import ContextMenu from './ContextMenu';
-import Storage from '../../Storage';
 const PlaylistWrapper = styled.section`
   position: relative;
   display: grid;

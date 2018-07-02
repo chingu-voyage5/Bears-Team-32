@@ -91,6 +91,10 @@ const SaveButton = StyledButton.extend`
   /* border: */
   box-shadow: inset 0 0 0 2px #b3b3b3;
   background: hsla(0, 0%, 9%, 0.7);
+  outline: none;
+  &:active {
+    transform: scale(0.9);
+  }
 `;
 
 const MoreButton = StyledButton.extend`
