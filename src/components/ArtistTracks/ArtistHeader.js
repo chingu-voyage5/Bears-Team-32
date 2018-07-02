@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import SaveToLibrary from '../SaveToLibrary';
+import { Link } from 'react-router-dom';
+
 class ArtistHeader extends Component {
   formatNumber = number => {
     return new Intl.NumberFormat().format(number);
@@ -25,8 +27,12 @@ class ArtistHeader extends Component {
         </ButtonGroup>
         <StyledNav>
           <ul>
-            <MenuItem>overview</MenuItem>
-            <MenuItem>related artists</MenuItem>
+            <MenuItem>
+              <Link to={`/artist/${artist.id}`}>overview</Link>
+            </MenuItem>
+            <MenuItem>
+              <Link to={`/artist/${artist.id}/related`}>related artists</Link>
+            </MenuItem>
             <MenuItem>about</MenuItem>
           </ul>
         </StyledNav>

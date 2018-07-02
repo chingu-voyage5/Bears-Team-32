@@ -53,7 +53,6 @@ class OtherResult extends Component {
 
   render() {
     const { type, results, bgColor } = this.props;
-    console.log(this.props);
     return (
       <Layout header={type} bgColor={bgColor || 'black'}>
         {results.map(result => (
