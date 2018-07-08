@@ -138,7 +138,7 @@ class Player__center extends Component {
         var sec = ('0' + Math.floor(curTime % 60)).slice(-2);
         
         playbackProgressT[0].innerHTML = min + ":" + sec;
-        player.currenTime = curTime;
+        player.currentTime = curTime;
 
         // right - total duration
         var min = Math.floor(audioDuration / 60);
