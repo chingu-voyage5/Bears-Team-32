@@ -22,6 +22,7 @@ class TrackResult extends Component {
             albumName={track.album.name}
             trackDuration={track.duration_ms}
             explicit={track.explicit}
+            data={track}
           />
         ))}
       </Wrapper>

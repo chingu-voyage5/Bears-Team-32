@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import SaveToLibrary from '../SaveToLibrary';
+import { Link } from 'react-router-dom';
 
 class ArtistHeader extends Component {
   formatNumber = number => {
@@ -9,27 +11,65 @@ class ArtistHeader extends Component {
   render() {
     const { artist } = this.props;
     return (
-      <div>
+      <Wrapper>
+        <ArtistImage bgImg={artist.images[0].url} />
         <ArtistFollower>{this.formatNumber(artist.followers.total)} followers</ArtistFollower>
         <ArtistTitle>{artist.name}</ArtistTitle>
         <ButtonGroup>
           <PlayButton>Play</PlayButton>
-          <SaveButton>Save to your library</SaveButton>
+          <SaveToLibrary type="artist" item={artist}>
+            {status => (
+              <SaveButton onClick={status.clickHandler}>
+                {status.saved ? 'Remove from your library' : 'Save to your library'}
+              </SaveButton>
+            )}
+          </SaveToLibrary>
           <MoreButton>...</MoreButton>
         </ButtonGroup>
         <StyledNav>
           <ul>
-            <MenuItem>overview</MenuItem>
-            <MenuItem>related artists</MenuItem>
+            <MenuItem>
+              <Link to={`/artist/${artist.id}`}>overview</Link>
+            </MenuItem>
+            <MenuItem>
+              <Link to={`/artist/${artist.id}/related`}>related artists</Link>
+            </MenuItem>
             <MenuItem>about</MenuItem>
           </ul>
         </StyledNav>
-      </div>
+      </Wrapper>
     );
   }
 }
 
 export default ArtistHeader;
+
+const Wrapper = styled.div`
+  position: relative;
+`;
+
+const ArtistImage = styled.div`
+  position: absolute;
+  background-image: ${props => `url(${props.bgImg})`};
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+
+  &::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background: linear-gradient(to bottom, rgba(24, 24, 24, 0), rgba(24, 24, 24, 1));
+  }
+`;
 
 const ArtistFollower = styled.span`
   color: gray;
@@ -54,6 +94,7 @@ const MenuItem = styled.li`
   text-transform: uppercase;
   letter-spacing: 0.15rem;
   font-size: 12px;
+  z-index: 9999;
 `;
 
 const StyledButton = styled.button`
@@ -66,6 +107,7 @@ const StyledButton = styled.button`
   min-width: 130px;
   padding: 0.8rem 3rem;
   text-transform: uppercase;
+  cursor: pointer;
 `;
 
 const PlayButton = StyledButton.extend`
@@ -75,9 +117,12 @@ const PlayButton = StyledButton.extend`
 `;
 
 const SaveButton = StyledButton.extend`
-  /* border: */
   box-shadow: inset 0 0 0 2px #b3b3b3;
   background: hsla(0, 0%, 9%, 0.7);
+  outline: none;
+  &:active {
+    transform: scale(0.9);
+  }
 `;
 
 const MoreButton = StyledButton.extend`

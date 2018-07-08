@@ -68,6 +68,11 @@ export const HeadingPrimary = styled.h1`
    font-weight: 600;
    justify-self: center;
    text-align: center;
-   text-transform: capitalize;
    line-height: 1.4;
+   text-transform: capitalize;
+`;
+
+export const HeadingSecondary = HeadingPrimary.extend`
+   font-size: 2rem;
+   text-transform: capitalize;
 `;

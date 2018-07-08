@@ -6,7 +6,7 @@ import { withRouter } from 'react-router';
 const Links = [
   { name: 'Search', to: '/search/recent', icon: 'fa-search' },
   { name: 'Home', to: '/browse/featured', icon: 'fa-home' },
-  { name: 'Your Library', to: '/collection/playlist', icon: 'fa-book-open' },
+  { name: 'Your Library', to: '/collection/playlists', icon: 'fa-book-open' },
 ];
 
 class SideBar extends Component {
