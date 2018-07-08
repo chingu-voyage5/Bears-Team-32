@@ -5,7 +5,7 @@ import CollectionEmpty from './CollectionEmpty';
 import OtherResult from './SearchResult/OtherResult';
 import TrackResult from './SearchResult/TrackResult';
 import Storage from '../Storage';
-import StorageContext from '../components/StorageContext';
+import StorageContext from '../components/storageContext';
 import { withRouter } from 'react-router';
 
 const Links = [
