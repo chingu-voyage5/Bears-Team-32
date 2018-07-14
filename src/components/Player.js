@@ -9,7 +9,7 @@ class Player extends Component {
     super();
     this.state = {
       album: {},
-      artists: []
+      fetched: false,
     }
 
     this.fetchData = this.fetchData.bind(this);
@@ -22,19 +22,24 @@ class Player extends Component {
 
   fetchData(url) {
     // API Link to Shakira's El Dorado album
+    this.setState({
+      fetched: false,
+    })
     axios.get(url).then(res => {
       this.setState({
         album: res.data.album,
-        artists: res.data.artists,
+        fetched: true,
       });
     });
   }
 
   render() {
+    const fetched = this.state.fetched;
+
     return (
       <footer className="playerBar-container">
         <div className="playerBar">
-          <Player__left trackData = {this.state}/>
+          <Player__left fetched = {fetched} albumData = {this.state.album}/>
           <Player__center />
           <Player__right />
         </div>
@@ -44,51 +49,43 @@ class Player extends Component {
 }
 
 class Player__left extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
-  
-  componentWillReceiveProps() {
-    console.log(this.state);
-    // is selected track the current one?
-    if(this.state.id || this.state.id !== this.props.trackData) {
-      const trackData = this.props.trackData;
-      
-      this.setState({
-        id: trackData.id,
-        name: trackData.name,
-        artists: trackData.artists
-      });      
-    }
-  }
-
   render () {
-    return (
-      <div className="player__left">
-        <div className="now-playing">
-          <div className="cover-art shadow now-playing__cover-art">
-            <div className="covert-art-image"></div>
-          </div>
-          <div className="track-info elipsis-one-line">
-            <div className="track-info__name elipsis-one-line">
-              <a href="">
-                {this.state.name}
-              </a>
+    if(this.props.fetched) {
+      // album data
+      const albumData = this.props.albumData;
+
+      // inline style
+      const albumCover = { backgroundImage:  'url(' + albumData.images[2].url + ')'};
+
+      return (
+        <div className="player__left">
+          <div className="now-playing">
+            <div className="cover-art shadow now-playing__cover-art">
+            <div className="covert-art-image" style={ albumCover }></div>            
             </div>
-            <div className="track-info__artists link-subtle elipsis-one-line">
-              <a href="">
-                {this.state.name}
-              </a>
+            <div className="track-info elipsis-one-line">
+              <div className="track-info__name elipsis-one-line">
+                <a href= "URL to album page">
+                  { albumData.name }
+                </a>
+              </div>
+              <div className="track-info__artists link-subtle elipsis-one-line">
+                <a href= "URL to artist page">
+                  { albumData.artists[0].name }
+                </a>
+              </div>
             </div>
+            <button className="control-button">
+              <FontAwesome name="plus" />
+            </button>
           </div>
-          <button className="control-button">
-            <FontAwesome name="plus" />
-          </button>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="Player__left"></div>
+      )
+    }
   }
 }
 
@@ -173,20 +170,12 @@ class Player__center extends Component {
   togglePlay = () => {
     // Select the audio element
     const player = document.querySelector(".audiosrc");
-    
     // Is the audio playing?
     this.setState({
       playing: !this.state.playing,
     });
-
     // Play/Pause the audio stream
-    if(this.state.playing) {
-      player.pause();
-    } else {
-      player.play();
-    }
-
-
+    this.state.playing ? player.pause() : player.play();
   }
   
   render() {
