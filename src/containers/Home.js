@@ -10,8 +10,16 @@ const apiBase = 'https://jffy-api.herokuapp.com/api/v1/spotify';
 const Links = [
   // { name: 'podcasts', to: '/browse/podcasts' },
   { name: 'featured', to: '/browse/featured', api: `${apiBase}/featured` },
-  { name: 'genres & moods', to: '/browse/genres', api: `${apiBase}/categories` },
-  { name: 'new releases', to: '/browse/newreleases', api: `${apiBase}/new-releases` },
+  {
+    name: 'genres & moods',
+    to: '/browse/genres',
+    api: `${apiBase}/categories`,
+  },
+  {
+    name: 'new releases',
+    to: '/browse/newreleases',
+    api: `${apiBase}/new-releases`,
+  },
   { name: 'discover', to: '/browse/discover', api: `${apiBase}/discover` },
 ];
 
@@ -65,13 +73,23 @@ class Home extends Component {
 
   render() {
     const { currentLink } = this.state;
+    // console.log("currentLink: ", currentLink);
+
     return (
       <HomeWrapper>
         <Wrapper bgColor={bgColors[currentLink.name]}>
           {Links.map(link => <StyledLink {...this.linkProps(link)}>{link.name}</StyledLink>)}
           <Switch>
             {Links.map(link => this.getRoutes(link))}
-            <Route render={() => <HomeResult name={Links[0].name} api={Links[0].api} />} />
+            <Route
+              render={() => (
+                <HomeResult
+                  currentLink={this.state.currentLink}
+                  name={Links[0].name}
+                  api={Links[0].api}
+                />
+              )}
+            />
           </Switch>
         </Wrapper>
       </HomeWrapper>
@@ -88,21 +106,11 @@ const HomeWrapper = styled.div`
 
 const Wrapper = styled.div`
   box-sizing: border-box;
-  background-color: ${props => props.bgColor};
   position: relative;
   min-height: 100%;
   padding-top: 2rem;
   transition: background-color 500ms;
-  &::before {
-    content: '';
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    bottom: 0;
-    left: 0;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
-  }
+  background: ${props => `linear-gradient(to bottom, ${props.bgColor}, rgba(0, 0, 0, 0.8))`};
 `;
 
 const StyledLink = styled(Link)`

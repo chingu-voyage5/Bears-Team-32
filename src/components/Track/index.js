@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { displayArtistName } from '../style-utils';
 import moment from 'moment';
 import ContextMenu from './ContextMenu';
-import Storage from '../../Storage';
 const PlaylistWrapper = styled.section`
   position: relative;
   display: grid;
@@ -133,9 +132,15 @@ const TrackDuration = styled.span`
 class Track extends Component {
   state = { toggleMenu: false, menuPos: {} };
   trackRef = React.createRef();
+
   componentDidMount() {
     window.addEventListener('click', this.closeMenu);
     window.addEventListener('contextmenu', this.closeMenu);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('click', this.closeMenu);
+    window.removeEventListener('contextmenu', this.closeMenu);
   }
 
   closeMenu = e => {
@@ -144,7 +149,9 @@ class Track extends Component {
     } else {
       this.setState({ toggleMenu: false });
     }
+    e.preventDefault();
   };
+
   openMenu = e => {
     const { clientX, clientY, target } = e;
     const rect = target.getBoundingClientRect();
@@ -154,13 +161,6 @@ class Track extends Component {
     };
     this.setState(({ toggleMenu }) => ({ toggleMenu: !toggleMenu, menuPos }));
     e.preventDefault();
-  };
-
-  addToLibrary = () => {
-    //TODO
-    let items = Storage.getItems('track');
-    items.push(this.props.data);
-    Storage.setItems('track', items);
   };
 
   render() {
@@ -173,6 +173,7 @@ class Track extends Component {
       trackDuration,
       explicit,
       id,
+      data,
     } = this.props;
     const { toggleMenu, menuPos } = this.state;
     return (
@@ -197,7 +198,7 @@ class Track extends Component {
 
             <TrackDuration>{moment(trackDuration).format('m:ss')}</TrackDuration>
           </RowContainer>
-          {toggleMenu && <ContextMenu pos={menuPos} addToLibrary={this.addToLibrary} />}
+          {toggleMenu && <ContextMenu pos={menuPos} type="track" data={data} />}
         </TrackWraper>
       </PlaylistWrapper>
     );

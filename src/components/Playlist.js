@@ -4,7 +4,8 @@ import Card from '../components/Card';
 import Track from '../components/Track';
 import ButtonPrimary from '../components/ButtonPrimary';
 import moment from 'moment';
-import Storage from '../Storage';
+import SaveToLibrary from './SaveToLibrary';
+
 const PlaylistContainer = styled.section`
   display: grid;
   grid-template-columns: 30% 1fr;
@@ -27,7 +28,20 @@ const Paragraph = styled.p`
   font-size: 0.8rem;
 `;
 
-const Playlist = ({ data }) => {
+const Save = styled.div`
+  font-size: 0.9rem;
+  color: ${props => (props.saved ? '#1dac4f' : 'white')};
+  cursor: pointer;
+  letter-spacing: 0.1rem;
+  &:hover {
+    transform: scale(1.1);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+`;
+
+const Playlist = ({ data, bgColor }) => {
   if (!data) {
     return null;
   }
@@ -69,15 +83,13 @@ const Playlist = ({ data }) => {
           {tracks.total > 1 ? `${tracks.total} SONGS` : `1 SONG`}
         </Paragraph>
         <ButtonPrimary>Play</ButtonPrimary>
-        <div
-          onClick={() => {
-            const items = Storage.getItems(type);
-            items.push(data);
-            Storage.setItems(type, items);
-          }}
-        >
-          Save to your library
-        </div>
+        <SaveToLibrary type={type} item={data}>
+          {status => (
+            <Save onClick={status.clickHandler} saved={status.saved}>
+              {status.saved ? 'Remove from your library' : 'Save to your library'}
+            </Save>
+          )}
+        </SaveToLibrary>
       </CardWrapper>
       <TracksWrapper>{tracksPlaylist}</TracksWrapper>
     </PlaylistContainer>

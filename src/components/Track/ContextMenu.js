@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-
+import SaveToLibrary from '../SaveToLibrary';
 class ContextMenu extends Component {
   render() {
-    const { pos, addToLibrary } = this.props;
+    const { pos, type, data } = this.props;
     return (
       <Wrapper pos={pos}>
         <div>Start Radio</div>
-        <div onClick={addToLibrary}>Add to library</div>
+        <SaveToLibrary type={type} item={data}>
+          {status => (
+            <div onClick={status.clickHandler}>
+              {status.saved ? 'Remove from your library' : 'Save to your library'}
+            </div>
+          )}
+        </SaveToLibrary>
         <div>Add to playlist</div>
       </Wrapper>
     );
