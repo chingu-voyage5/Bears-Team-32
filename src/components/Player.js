@@ -8,7 +8,7 @@ class Player extends Component {
   constructor() {
     super();
     this.state = {
-      album: {},
+      trackData: {},
       fetched: false,
     }
 
@@ -27,7 +27,7 @@ class Player extends Component {
     })
     axios.get(url).then(res => {
       this.setState({
-        album: res.data.album,
+        trackData: res.data,
         fetched: true,
       });
     });
@@ -35,12 +35,14 @@ class Player extends Component {
 
   render() {
     const fetched = this.state.fetched;
+    const albumData = this.state.trackData.album;
+    const trackURL = this.state.trackData.preview_url;
 
     return (
       <footer className="playerBar-container">
         <div className="playerBar">
-          <Player__left fetched = {fetched} albumData = {this.state.album}/>
-          <Player__center />
+          <Player__left fetched = {fetched} albumData = {albumData}/>
+          <Player__center fetched = {fetched} trackURL = {trackURL}/>
           <Player__right />
         </div>
       </footer>
@@ -93,7 +95,6 @@ class Player__center extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      audio: "https://p.scdn.co/mp3-preview/b36585e9128f536444f4ed9eb1f327203d147dce?cid=4181eaff195a47029bfbc102712c82c1",
       playing: false,
       mousedown: false,
     }
@@ -170,18 +171,22 @@ class Player__center extends Component {
   togglePlay = () => {
     // Select the audio element
     const player = document.querySelector(".audiosrc");
+    
     // Is the audio playing?
     this.setState({
       playing: !this.state.playing,
     });
+
     // Play/Pause the audio stream
     this.state.playing ? player.pause() : player.play();
   }
   
   render() {
+    const trackURL = this.props.trackURL;
+
     return (
       <div className="player__center">
-        <audio className="audiosrc" src={this.state.audio}></audio>
+        <audio className="audiosrc" src={trackURL}></audio>
         <div className="player-controls">
           <div className="player-controls__buttons">
             <button className="control-button">
