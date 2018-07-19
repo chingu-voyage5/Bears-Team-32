@@ -98,22 +98,17 @@ class Player__center extends Component {
       playing: false,
       mousedown: false,
     }
-
-    this.handleUpdate = this.handleUpdate.bind(this);
-    this.setProgressBar = this.setProgressBar.bind(this);
-    this.mousedown = this.mousedown.bind(this);
-    this.mouseup = this.mouseup.bind(this);
   }  
 
-  mousedown() {
+  mousedown = () => {
     this.setState({ mousedown: !this.state.mousedown });
   }
 
-  mouseup() {
+  mouseup = () => {
     this.setState({ mousedown: !this.state.mousedown });
   }
 
-  handleUpdate(e) {
+  handleUpdate = (e) => {
     if(e.type === 'click' || this.state.mousedown) {
       // Select the audio element
       const player = document.querySelector(".audiosrc");
@@ -138,7 +133,6 @@ class Player__center extends Component {
         const audioDuration = player.duration;
 
         // left
-        console.log(audioDuration * newPos / 100);
         const curTime = audioDuration * newPos / 100;
         
         var min = Math.floor(curTime / 60);
@@ -159,7 +153,7 @@ class Player__center extends Component {
     }
   }
 
-  setProgressBar(perc) {
+  setProgressBar = (perc) => {
     const progressBar = document.querySelectorAll(".progress-bar__fg");
     const progressBarSlider = document.querySelectorAll(".progress-bar__slider");
 
@@ -211,14 +205,14 @@ class Player__center extends Component {
             </button>
           </div>
           <div className="playback-bar">
-            <div className="playback-bar__progress-time">2:43</div>
+            <div className="playback-bar__progress-time">-:--</div>
             <div className="progress-bar" onClick={this.handleUpdate} onMouseDown={this.mousedown} onMouseUp={this.mouseup} onMouseMove={this.handleUpdate}>
               <div className="middle-align progress-bar__bg" >
-                <div className="progress-bar__fg" style={{width: '66.9757%'}}></div>
-                <div className="middle-align progress-bar__slider" style={{left: '66.9757%'}}></div>
+                <div className="progress-bar__fg"></div>
+                <div className="middle-align progress-bar__slider"></div>
               </div>
             </div>
-            <div className="playback-bar__progress-time">4:04</div>
+            <div className="playback-bar__progress-time">-:--</div>
           </div>
         </div>
       </div>
