@@ -32,8 +32,7 @@ class Player extends Component {
     });
   }
 
-  scrubHandler = () => {
-    console.log("called scrubHandler!")
+  scrubHandler = (e) => {
     this.setState({
       scrubbing: !this.state.scrubbing,
     })
@@ -81,7 +80,7 @@ class Player extends Component {
     const curTime = audioDuration * newPos / 100;
     playbackProgressT[0].innerHTML = this.calcTime(curTime);
     playbackProgressT[1].innerHTML = this.calcTime(audioDuration);   
-    if(!this.state.mousedown) {
+    if(!this.state.scrubbing) {
       player.currentTime = curTime;
     }
   }
