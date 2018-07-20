@@ -75,7 +75,7 @@ a:focus, a:hover {
     flex-shrink: 0;
     width: 56px;
     height: 56px;
-    padding-right: 14px;
+    margin-right: 14px;
 }
 
 .cover-art {

@@ -15,12 +15,17 @@ class Player extends Component {
   }
 
   componentDidMount() {
-    const apiLink = "https://jffy-api.herokuapp.com/api/v1/spotify/?query=https://api.spotify.com/v1/tracks/1D8bmUIhLHEO4KMS2SHwUx";
-    this.fetchData(apiLink);
+    this.fetchData();
   }
 
-  fetchData = (url) => {
+  componentWillReceiveProps() {
+    this.fetchData(this.props.id);
+  }
+
+  fetchData = (id) => {
     // API Link to Shakira's El Dorado album
+    const trackId = id || "1D8bmUIhLHEO4KMS2SHwUx";
+    const url = "https://jffy-api.herokuapp.com/api/v1/spotify/?query=https://api.spotify.com/v1/tracks/" + trackId;
     this.setState({
       fetched: false,
     })
@@ -39,8 +44,7 @@ class Player extends Component {
   }
 
   handleScrub = (e) => {
-    if(e.type === 'click' || this.state.scrubbing) {
-      console.log(e.pageX);
+    if((e.type === 'click' && e.target.className === "progress-bar") || this.state.scrubbing) {
       // Select the audio element
       const progressBar = document.querySelectorAll(".progress-bar__fg");
 
@@ -60,7 +64,20 @@ class Player extends Component {
         this.setAudioTime(newPos)
       }
     }
-  }  
+  }
+
+  timeUpdateHandler = () => {
+    const player = document.querySelector(".audiosrc");
+    // Playback handling
+    const playbackProgressT = document.querySelectorAll(".playback-bar__progress-time");
+    const audioDuration = player.duration;
+
+    const curTime = player.currentTime;
+    playbackProgressT[0].innerHTML = this.calcTime(curTime);
+    playbackProgressT[1].innerHTML = this.calcTime(audioDuration); 
+    var newPos = curTime / audioDuration * 100;   
+    this.setProgressBar(newPos);
+  }
   
   setProgressBar = (perc) => {
     const progressBar = document.querySelectorAll(".progress-bar__fg");
@@ -109,6 +126,7 @@ class Player extends Component {
             trackURL = {trackURL} 
             scrubbing={this.state.scrubbing} 
             scrubHandler={this.scrubHandler}
+            timeUpdateHandler = {this.timeUpdateHandler}
           />
           <Player__right />
         </div>
@@ -178,10 +196,11 @@ class Player__center extends Component {
   
   render() {
     const trackURL = this.props.trackURL;
+    const handleTimeUpdate = this.props.timeUpdateHandler;
 
     return (
       <div className="player__center">
-        <audio className="audiosrc" src={trackURL}></audio>
+        <audio className="audiosrc" src={trackURL} onTimeUpdate={handleTimeUpdate}></audio>
         <div className="player-controls">
           <div className="player-controls__buttons">
             <button className="control-button">
