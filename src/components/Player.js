@@ -130,7 +130,7 @@ class Player__left extends Component {
         <div className="player__left">
           <div className="now-playing">
             <div className="cover-art shadow now-playing__cover-art">
-            <div className="covert-art-image" style={ albumCover }></div>            
+              <div className="covert-art-image" style={ albumCover }></div>            
             </div>
             <div className="track-info elipsis-one-line">
               <div className="track-info__name elipsis-one-line">
@@ -152,7 +152,9 @@ class Player__left extends Component {
       );
     } else {
       return (
-        <div className="Player__left"></div>
+        <div className="player__left">
+          <div className="now-playing"></div>
+        </div>
       )
     }
   }
