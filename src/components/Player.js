@@ -10,39 +10,124 @@ class Player extends Component {
     this.state = {
       trackData: {},
       fetched: false,
+      scrubbing: false,
     }
-
-    this.fetchData = this.fetchData.bind(this);
   }
 
   componentDidMount() {
-    const apiLink = "https://jffy-api.herokuapp.com/api/v1/spotify/?query=https://api.spotify.com/v1/tracks/1D8bmUIhLHEO4KMS2SHwUx";
-    this.fetchData(apiLink);
+    this.fetchData();
   }
 
-  fetchData(url) {
+  componentWillReceiveProps() {
+    this.fetchData(this.props.id);
+  }
+
+  fetchData = (id) => {
     // API Link to Shakira's El Dorado album
+    const trackId = id || "1D8bmUIhLHEO4KMS2SHwUx";
+    const url = "https://jffy-api.herokuapp.com/api/v1/spotify/?query=https://api.spotify.com/v1/tracks/" + trackId;
     this.setState({
       fetched: false,
     })
     axios.get(url).then(res => {
       this.setState({
         trackData: res.data,
-        fetched: true,
+        fetched: true
       });
     });
   }
 
+  scrubHandler = (e) => {
+    this.setState({
+      scrubbing: !this.state.scrubbing,
+    })
+  }
+
+  handleScrub = (e) => {
+    if((e.type === 'click' && e.target.className === "progress-bar") || this.state.scrubbing) {
+      // Select the audio element
+      const progressBar = document.querySelectorAll(".progress-bar__fg");
+
+      const parentElBound = progressBar[0].parentNode.getBoundingClientRect();
+      const curCursorPos = e.pageX;
+
+      if(curCursorPos > parentElBound.left && curCursorPos < parentElBound.right) {
+        const barWidth = parentElBound.width;
+        const dist = curCursorPos - parentElBound.left;
+
+        var newPos = dist / barWidth * 100;
+      }
+
+      if(newPos <= 100) {
+        // when newPos is too large, it is not accepted by the volume method
+        this.setProgressBar(newPos);
+        this.setAudioTime(newPos)
+      }
+    }
+  }
+
+  timeUpdateHandler = () => {
+    const player = document.querySelector(".audiosrc");
+    // Playback handling
+    const playbackProgressT = document.querySelectorAll(".playback-bar__progress-time");
+    const audioDuration = player.duration;
+
+    const curTime = player.currentTime;
+    playbackProgressT[0].innerHTML = this.calcTime(curTime);
+    playbackProgressT[1].innerHTML = this.calcTime(audioDuration); 
+    var newPos = curTime / audioDuration * 100;   
+    this.setProgressBar(newPos);
+  }
+  
+  setProgressBar = (perc) => {
+    const progressBar = document.querySelectorAll(".progress-bar__fg");
+    const progressBarSlider = document.querySelectorAll(".progress-bar__slider");
+
+    progressBar[0].style.width = perc + "%";
+    progressBarSlider[0].style.left = perc + "%";
+  }
+
+  setAudioTime = (newPos) => {
+    const player = document.querySelector(".audiosrc");
+    // Playback handling
+    const playbackProgressT = document.querySelectorAll(".playback-bar__progress-time");
+    const audioDuration = player.duration;
+
+    // left
+    const curTime = audioDuration * newPos / 100;
+    playbackProgressT[0].innerHTML = this.calcTime(curTime);
+    playbackProgressT[1].innerHTML = this.calcTime(audioDuration);   
+    if(!this.state.scrubbing) {
+      player.currentTime = curTime;
+    }
+  }
+
+  calcTime = (duration) => {
+    var min = Math.floor(duration / 60);
+    var sec = ('0' + Math.floor(duration % 60)).slice(-2);
+    return  min + ":" + sec;
+  }
+  
   render() {
     const fetched = this.state.fetched;
     const albumData = this.state.trackData.album;
     const trackURL = this.state.trackData.preview_url;
 
     return (
-      <footer className="playerBar-container">
+      <footer className="playerBar-container"
+        onClick = {this.handleScrub}
+        onMouseMove={this.handleScrub}
+        onMouseDown={this.scrubHandler}
+        onMouseUp={this.scrubHandler}>
         <div className="playerBar">
           <Player__left fetched = {fetched} albumData = {albumData}/>
-          <Player__center fetched = {fetched} trackURL = {trackURL}/>
+          <Player__center 
+            fetched = {fetched} 
+            trackURL = {trackURL} 
+            scrubbing={this.state.scrubbing} 
+            scrubHandler={this.scrubHandler}
+            timeUpdateHandler = {this.timeUpdateHandler}
+          />
           <Player__right />
         </div>
       </footer>
@@ -63,7 +148,7 @@ class Player__left extends Component {
         <div className="player__left">
           <div className="now-playing">
             <div className="cover-art shadow now-playing__cover-art">
-            <div className="covert-art-image" style={ albumCover }></div>            
+              <div className="covert-art-image" style={ albumCover }></div>            
             </div>
             <div className="track-info elipsis-one-line">
               <div className="track-info__name elipsis-one-line">
@@ -85,7 +170,9 @@ class Player__left extends Component {
       );
     } else {
       return (
-        <div className="Player__left"></div>
+        <div className="player__left">
+          <div className="now-playing"></div>
+        </div>
       )
     }
   }
@@ -95,98 +182,25 @@ class Player__center extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      playing: false,
-      mousedown: false,
+      playing: false
     }
-
-    this.handleUpdate = this.handleUpdate.bind(this);
-    this.setProgressBar = this.setProgressBar.bind(this);
-    this.mousedown = this.mousedown.bind(this);
-    this.mouseup = this.mouseup.bind(this);
   }  
-
-  mousedown() {
-    this.setState({ mousedown: !this.state.mousedown });
-  }
-
-  mouseup() {
-    this.setState({ mousedown: !this.state.mousedown });
-  }
-
-  handleUpdate(e) {
-    if(e.type === 'click' || this.state.mousedown) {
-      // Select the audio element
-      const player = document.querySelector(".audiosrc");
-      const progressBar = document.querySelectorAll(".progress-bar__fg");
-
-      const parentElBound = progressBar[0].parentNode.getBoundingClientRect();
-      const curCursorPos = e.pageX;
-
-      if(curCursorPos > parentElBound.left && curCursorPos < parentElBound.right) {
-        const barWidth = parentElBound.width;
-        const dist = curCursorPos - parentElBound.left;
-
-        var newPos = dist / barWidth * 100;
-      }
-
-      if(newPos <= 100) {
-        // when newPos is too large, it is not accepted by the volume method
-        this.setProgressBar(newPos);
-        
-        // Playback handling
-        const playbackProgressT = document.querySelectorAll(".playback-bar__progress-time");
-        const audioDuration = player.duration;
-
-        // left
-        console.log(audioDuration * newPos / 100);
-        const curTime = audioDuration * newPos / 100;
-        
-        var min = Math.floor(curTime / 60);
-        var sec = ('0' + Math.floor(curTime % 60)).slice(-2);
-        
-        playbackProgressT[0].innerHTML = min + ":" + sec;
-        player.currentTime = curTime;
-
-        // right - total duration
-        var min = Math.floor(audioDuration / 60);
-        var sec = ('0' + Math.floor(audioDuration % 60)).slice(-2);
-
-        playbackProgressT[1].innerHTML = min + ":" + sec;     
-
-      }
-
-
-    }
-  }
-
-  setProgressBar(perc) {
-    const progressBar = document.querySelectorAll(".progress-bar__fg");
-    const progressBarSlider = document.querySelectorAll(".progress-bar__slider");
-
-    progressBar[0].style.width = perc + "%";
-    progressBarSlider[0].style.left = perc + "%";
-  }
-
 
   togglePlay = () => {
     // Select the audio element
     const player = document.querySelector(".audiosrc");
-    
     // Is the audio playing?
-    this.setState({
-      playing: !this.state.playing,
-    });
-
-    // Play/Pause the audio stream
-    this.state.playing ? player.pause() : player.play();
+    this.setState({ playing: player.paused });
+    player.paused ? player.play() : player.pause();
   }
   
   render() {
     const trackURL = this.props.trackURL;
+    const handleTimeUpdate = this.props.timeUpdateHandler;
 
     return (
       <div className="player__center">
-        <audio className="audiosrc" src={trackURL}></audio>
+        <audio className="audiosrc" src={trackURL} onTimeUpdate={handleTimeUpdate}></audio>
         <div className="player-controls">
           <div className="player-controls__buttons">
             <button className="control-button">
@@ -211,14 +225,14 @@ class Player__center extends Component {
             </button>
           </div>
           <div className="playback-bar">
-            <div className="playback-bar__progress-time">2:43</div>
-            <div className="progress-bar" onClick={this.handleUpdate} onMouseDown={this.mousedown} onMouseUp={this.mouseup} onMouseMove={this.handleUpdate}>
+            <div className="playback-bar__progress-time">-:--</div>
+            <div className="progress-bar">
               <div className="middle-align progress-bar__bg" >
-                <div className="progress-bar__fg" style={{width: '66.9757%'}}></div>
-                <div className="middle-align progress-bar__slider" style={{left: '66.9757%'}}></div>
+                <div className="progress-bar__fg"></div>
+                <div className="middle-align progress-bar__slider"></div>
               </div>
             </div>
-            <div className="playback-bar__progress-time">4:04</div>
+            <div className="playback-bar__progress-time">-:--</div>
           </div>
         </div>
       </div>
@@ -233,22 +247,9 @@ class Player__right extends Component {
     this.state = {
       mousedown: false,
     }
-
-    this.handleUpdate = this.handleUpdate.bind(this);
-    this.setProgressBar = this.setProgressBar.bind(this);
-    this.mousedown = this.mousedown.bind(this);
-    this.mouseup = this.mouseup.bind(this);
   }  
 
-  mousedown() {
-    this.setState({ mousedown: !this.state.mousedown });
-  }
-
-  mouseup() {
-    this.setState({ mousedown: !this.state.mousedown });
-  }
-
-  handleUpdate(e) {
+  handleUpdate = (e) => {
     if(e.type === 'click' || this.state.mousedown) {
       // Select the audio element
       const player = document.querySelector(".audiosrc");
@@ -274,7 +275,7 @@ class Player__right extends Component {
     }
   }
 
-  setProgressBar(perc) {
+  setProgressBar = (perc) => {
     const progressBar = document.querySelectorAll(".progress-bar__fg");
     const progressBarSlider = document.querySelectorAll(".progress-bar__slider");
 
